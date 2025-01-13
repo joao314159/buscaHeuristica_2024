@@ -17,9 +17,11 @@ public:
     double resultado;
     vector<Grupo> solucao;
 
+    vector<Solution> vizinhos;
+
     Solution()
     {
-        cout << "SOLUTION INICIADA";
+        //cout << "SOLUTION INICIADA";
     }
     Solution(Instance instance)
     {
@@ -336,6 +338,8 @@ public:
         return grupos;
     }
 
+
+    //ESSE É A FUNÇÃO USADA NO TRABALHO, COM A  HEURÍSTICA
     vector<Grupo> calcular_resultado5()
     {
 
@@ -394,6 +398,7 @@ public:
                     }
                 }
             }
+
             else
             {
 
@@ -422,6 +427,184 @@ public:
             funcoes.alocar_elemento(grupos[grupos[position].i], elementos, elementos.back());
         }
 
+        this->solucao= grupos;
+
         return grupos;
     }
+
+  
+    double limite_superior(){
+        int tamanho = instance.arr_Pair.size();
+        double total = 0.0;
+        vector<Pair> distances = instance.arr_Pair;
+   
+        for(int i=0;i<tamanho;i++){
+                      
+            total+= distances[i].get_distance_Element();
+        }
+        return total;
+    }
+
+    double limite_superior2(){
+
+        Funcoes funcoes;    
+
+        vector<Grupo> grupos = funcoes.get_grupos(instance);
+
+        int quantidade_elementos = instance.quant_Elem;
+
+        vector<Grupo> grupos_ordenados_por_tamanho_minimo = grupos;
+        funcoes.ordenar_tam_minimo(grupos_ordenados_por_tamanho_minimo);
+
+        vector<Grupo> grupos_ordenados_por_tamanho_maximo = grupos;
+        funcoes.ordenar_tam_maximo(grupos_ordenados_por_tamanho_maximo);
+
+        int distances_total;
+        distances_total = instance.arr_Pair[instance.arr_Pair.size()-1].second_Element;
+
+        for(int i = 0; i< grupos.size();i++){
+            grupos_ordenados_por_tamanho_minimo[i].tam_maximo = grupos_ordenados_por_tamanho_maximo[i].tam_maximo;
+        }
+
+        for(int i = 0;i<grupos.size();i++){
+            grupos[i].i = grupos[i].tam_minimo;
+            quantidade_elementos-=grupos[i].i;
+        }
+
+        
+
+        for(int i = grupos_ordenados_por_tamanho_minimo.size() -1 ; i>=0; i--){
+        
+            while(grupos_ordenados_por_tamanho_minimo[i].i < grupos_ordenados_por_tamanho_minimo[i].tam_maximo  and quantidade_elementos > 0 ){
+                grupos_ordenados_por_tamanho_minimo[i].i +=1;
+                quantidade_elementos-=1;
+            }
+
+        }
+
+        int quantidade_pares = 0;
+
+        for(int i = 0; i<grupos_ordenados_por_tamanho_minimo.size(); i++){
+            quantidade_pares+= funcoes.quantidade_pares(grupos_ordenados_por_tamanho_minimo[i].i);
+        }
+
+        vector<Pair> distancias_ordenadas = instance.arr_Pair;
+        funcoes.ordenar_distancias(distancias_ordenadas);
+
+        double total = 0.0;
+
+        int i2 = distancias_ordenadas.size()-1;
+        for(int i =quantidade_pares-1;i >=0;i--){
+            total+= (double) distancias_ordenadas[i2].get_distance_Element();
+            i2-=1;
+        }
+
+        return total;
+
+    }
+
+    Solution get_primeira_melhora(){
+
+    }
+
+    void get_todos_vizinhos(){
+
+        Funcoes funcoes;
+
+        vector<Solution> vizinhos;
+
+        vector<Grupo> solucao_atual = this->solucao;
+
+        //fazer para todos os pares de grupos
+        for(int i = 0; i< solucao_atual.size() -1; i++){
+            for(int i2=i+1;i2< solucao_atual.size();i2++){
+                //cout<<i<<", "<<i2 <<endl;
+
+                //para cada par de grupos nós trocamos o primeiro elemento
+                //de um grupo com o primeiro elemento de outro
+                //e adicionamos o resultado no array de vizinhos
+                funcoes.trocaElementos(solucao_atual[i],solucao_atual[i2],0,0);
+
+                //adicionamos o vector de grupos com os elementos trocados no vizinho
+                Solution solucao1;
+                solucao1.instance = this->instance;
+                vizinhos.push_back(solucao1);
+                vizinhos.back().solucao = solucao_atual;
+
+                //restauramos a solução atual
+                funcoes.trocaElementos(solucao_atual[i],solucao_atual[i2],0,0);
+            }    
+        }
+
+
+        /*
+        //testa troca de elementos
+        funcoes.trocaElementos(solucao_atual[0],solucao_atual[1],0,0);
+
+        //passa a solução com elementos trocados para o vizinho
+        Solution solucao1;
+        solucao1.instance = this->instance;
+        vizinhos.push_back(solucao1);
+        vizinhos.back().solucao = solucao_atual;
+
+        */
+
+        //agora o primeiro vizinho tem a solução com o primeiro elemento do grupo 1 trocado com o primeiro elemento
+        //do grupo 2
+
+        this->vizinhos = vizinhos;
+        
+    }
+
+    void get_todos_vizinhos2(){
+
+        Funcoes funcoes;
+        
+
+
+    }
+
+
+
+    //geramos a lista de vizinhos antes de usar as funções tem_maior_vizinho e maior_vizinho
+
+    //checa se algum vizinho é melhor que o resultado atual
+    int tem_maior_vizinho(){
+        
+
+        //retorna -1 se a solução atual é melhor, ou o índice do vizinho se algum vizinho for melhor 
+        return resultado;
+    }
+
+    //retorna índice do melhor vizinho
+    int maior_vizinho(){
+
+        Funcoes funcoes;
+
+        int index_resultado = 0;
+
+        vector<Solution> lista_vizinhos = this->vizinhos;
+
+        if(lista_vizinhos.empty()){
+            cout<<"Não há vizinhos na lista de vizinhos"<<endl;
+        }
+        else{
+            double resultado = -10;
+            double auxiliar;            
+            for(int i=0;i<lista_vizinhos.size();i++){
+                auxiliar = funcoes.get_total(lista_vizinhos[i].solucao,lista_vizinhos[i].instance.arr_Pair);
+                
+                //se a solução é melhor que a melhor solução até o momento
+                if(auxiliar > resultado){
+                    resultado = auxiliar;
+                    //salvamos o índice do melhor vizinho até o momento
+                    index_resultado = i;
+                }
+            }            
+        }
+
+        return index_resultado;
+
+    }
+
 };
