@@ -32,6 +32,12 @@ bool comparar_tam_minimo(Grupo grupo1, Grupo grupo2)
 class Funcoes
 {
 public:
+
+
+    int quantidade_pares(int a){
+        return a*(a-1)/2;
+    }
+
     void ordenar_distancias(vector<Pair> &distances)
     {
         std::sort(distances.begin(), distances.end(), comparar_distancias);
@@ -522,4 +528,17 @@ public:
 
         return grupos[maior_position].i;
     }
+
+
+    void trocaElementos(Grupo& grupo1, Grupo& grupo2, int elementoGrupo1index, int elementoGrupo2index){
+
+        int auxiliar = grupo1.elementos[elementoGrupo1index];  
+         
+
+        grupo1.elementos[elementoGrupo1index] = grupo2.elementos[elementoGrupo2index];
+        grupo2.elementos[elementoGrupo2index] = auxiliar;
+
+    }
+
+
 };
