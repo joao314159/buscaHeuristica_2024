@@ -503,9 +503,105 @@ public:
 
     }
 
+
+
     Solution get_primeira_melhora(){
 
+        Funcoes funcoes;
+
+        vector<Solution> vizinhos;
+
+        double resultado_atual = funcoes.get_total(this->solucao,this->instance.arr_Pair);
+        double resultado_vizinho; 
+
+        resultado_vizinho = -1;
+
+        while(resultado_atual>resultado_vizinho){
+
+            vizinhos.push_back(*this);
+            resultado_vizinho+=10000;
+            //cout<<"a"<<endl;
+        }
+        
+        this->vizinhos = vizinhos;
+
+        return this->vizinhos.back();
+
+
+
+
+
+/*
+        Funcoes funcoes;
+
+        vector<Solution> vizinhos;
+
+        vector<Grupo> solucao_atual = this->solucao;
+
+        //fazer para todos os pares de grupos
+        for(int i = 0; i< solucao_atual.size() -1; i++){
+
+            double resultado_atual;
+            double resultado_vizinho; 
+
+            for(int i2=i+1;i2< solucao_atual.size();i2++){
+                //cout<<i<<", "<<i2 <<endl;
+
+                //para cada par de grupos nós trocamos o primeiro elemento
+                //de um grupo com o primeiro elemento de outro
+                //e adicionamos o resultado no array de vizinhos
+                funcoes.trocaElementos(solucao_atual[i],solucao_atual[i2],0,0);
+
+                //double resultado_atual = funcoes.get_total(this->solucao,this->instance.arr_Pair);
+               // double resultado_vizinho = funcoes.get_total(this->vizinhos.back().solucao,this->instance.arr_Pair);
+
+                
+                //adicionamos o vector de grupos com os elementos trocados no vizinho
+                Solution solucao1;
+                solucao1.instance = this->instance;
+                vizinhos.push_back(solucao1);
+                vizinhos.back().solucao = solucao_atual;
+
+                //adiciona ao vizinho um ponteiro para a solução de onde ele veio
+                vizinhos.back().vizinhos = {};
+                vizinhos.back().vizinhos.push_back(*this);
+
+
+                //restauramos a solução atual
+                funcoes.trocaElementos(solucao_atual[i],solucao_atual[i2],0,0);
+
+                //comparamos os resultados e interrompemos a busca se achamos um
+                //resultado melhor que a solução atual
+                resultado_atual = funcoes.get_total(this->solucao,this->instance.arr_Pair);
+                resultado_vizinho = funcoes.get_total(this->vizinhos.back().solucao,this->instance.arr_Pair);
+
+                if(resultado_atual < resultado_vizinho){
+                    cout<<"break"<<endl;
+                    break;                                       
+                }
+                cout<<"dentro do for"<<endl<<endl;
+
+            }  
+
+            if(resultado_atual < resultado_vizinho){
+                cout<<"break"<<endl;
+                break;                                       
+            }  
+        }
+
+        cout<<"saiu do for"<<endl<<endl;
+
+        this->vizinhos = vizinhos;
+
+        //retornamos o vizinho da lista de vizinho do momento que paramos de buscar
+        //pois é o momento que achamos o vizinho melhor que a solução atual
+        return this->vizinhos.back();
+*/
     }
+
+
+
+
 
     void get_todos_vizinhos(){
 
@@ -530,6 +626,11 @@ public:
                 solucao1.instance = this->instance;
                 vizinhos.push_back(solucao1);
                 vizinhos.back().solucao = solucao_atual;
+
+                //adiciona ao vizinho um ponteiro para a solução de onde ele veio
+                vizinhos.back().vizinhos = {};
+                vizinhos.back().vizinhos.push_back(*this);
+
 
                 //restauramos a solução atual
                 funcoes.trocaElementos(solucao_atual[i],solucao_atual[i2],0,0);
@@ -556,26 +657,19 @@ public:
         
     }
 
+
+    //para a segunda vizinhança
     void get_todos_vizinhos2(){
 
-        Funcoes funcoes;
-        
-
+        Funcoes funcoes;       
 
     }
-
 
 
     //geramos a lista de vizinhos antes de usar as funções tem_maior_vizinho e maior_vizinho
 
-    //checa se algum vizinho é melhor que o resultado atual
-    int tem_maior_vizinho(){
-        
-
-        //retorna -1 se a solução atual é melhor, ou o índice do vizinho se algum vizinho for melhor 
-        return resultado;
-    }
-
+   
+    //melhor melhora
     //retorna índice do melhor vizinho
     int maior_vizinho(){
 
@@ -606,5 +700,33 @@ public:
         return index_resultado;
 
     }
+
+
+    //checa se algum vizinho é melhor que o resultado atual
+    int tem_maior_vizinho(){
+
+        Funcoes funcoes;
+        
+        int index = -1;
+
+        int auxiliar = maior_vizinho();
+        
+        double resultado_atual = funcoes.get_total(this->solucao,this->instance.arr_Pair);
+        double resultado_vizinho = funcoes.get_total(this->vizinhos[auxiliar].solucao,this->instance.arr_Pair);
+
+        //se o resultado atual for maior que o vizinho, retonamos -1
+        if(resultado_atual>resultado_vizinho){
+            index = -1;
+        }
+        else{
+            index = auxiliar;
+        }
+
+        //retorna -1 se a solução atual é melhor, ou o índice do vizinho se algum vizinho for melhor 
+        return index;
+    }
+
+
+
 
 };
