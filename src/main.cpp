@@ -11,8 +11,17 @@
 using namespace std;
 
 
+//g++ main.cpp -o main.exe; ./main.exe
 
-// Imprime os resultados.
+
+//escolher duas vizinhanças
+
+//fazer o percorrimento acontecer por uma quantidade de tempo
+
+//fazer a busca tabu
+
+
+//Imprime os resultados.
 void resultados(Instance instance)
 {
     Funcoes funcoes;
@@ -56,13 +65,28 @@ void resultados(Instance instance)
     //funcoes.trocaElementos(solution.solucao[0], solution.solucao[1],0,0);
     //resultado5 = funcoes.get_total(solution.solucao, instance.arr_Pair);
     
-    solution.get_todos_vizinhos();
+    /*
 
-    //pegar o vizinho que leva ao melhor resultado entre os vizinhos
-    int i = solution.maior_vizinho();
-    cout<<"índice: "<<i<<endl<<endl;
+        solution.get_todos_vizinhos();
+
+        //pegar o vizinho que leva ao melhor resultado entre os vizinhos
+        int i = solution.maior_vizinho();
+        cout<<"índice: "<<i<<endl<<endl;
+
+        //checamos se o vizinho é melhor que a solução atual
+        i = solution.tem_maior_vizinho();
+        cout<<"índice: "<<i<<endl<<endl;
+
+        if(i != -1){    
+            resultado5 = funcoes.get_total(solution.vizinhos[i].solucao,instance.arr_Pair);
+        }
+
+
+    */
     
-    resultado5 = funcoes.get_total(solution.vizinhos[i].solucao,instance.arr_Pair);
+
+    //testando retorno do vizinho para solução anterior
+    //resultado5 = funcoes.get_total(solution.vizinhos[i].vizinhos.back().solucao,instance.arr_Pair);
 
 
     cout<< std::setprecision (15) << resultado5 <<endl;
@@ -72,6 +96,16 @@ void resultados(Instance instance)
     cout<<endl<<endl;
     cout<<endl<<endl;
 
+    Solution solucao2 = solution.get_primeira_melhora();
+    resultado5 = funcoes.get_total(solucao2.solucao,instance.arr_Pair);
+    cout<<"primeira melhora: "<<endl;
+    cout<< std::setprecision (15) << resultado5 <<endl;
+    
+    cout<<endl<<endl;
+    cout<<endl<<endl;
+    cout<<endl<<endl;
+    cout<<endl<<endl;
+    
 
 }
 
