@@ -2,7 +2,7 @@
 CXX = g++
 
 # Flags de compilação
-CXXFLAGS = -std=c++11 -Wall -fopenmp
+CXXFLAGS = -std=c++11 -Wall 
 
 # Nome do executável
 TARGET = main.exe
