@@ -511,51 +511,29 @@ public:
 
         vector<Solution> vizinhos;
 
+        vector<Grupo> solucao_atual = this->solucao;
+
         double resultado_atual = funcoes.get_total(this->solucao,this->instance.arr_Pair);
         double resultado_vizinho; 
 
         resultado_vizinho = -1;
 
-        while(resultado_atual>resultado_vizinho){
+        int i=0;
+        int i2=0;
 
-            vizinhos.push_back(*this);
-            resultado_vizinho+=10000;
-            //cout<<"a"<<endl;
-        }
-        
-        this->vizinhos = vizinhos;
+        while(resultado_atual>resultado_vizinho and i< solucao_atual.size() -1 ){
 
-        return this->vizinhos.back();
-
-
+            i2 = i +1;
+            while(resultado_atual>resultado_vizinho and i2<  solucao_atual.size()){
+                //vizinhos.push_back(*this);
+                //resultado_vizinho+=10000;
+                //cout<<"a"<<endl;
 
 
-
-/*
-        Funcoes funcoes;
-
-        vector<Solution> vizinhos;
-
-        vector<Grupo> solucao_atual = this->solucao;
-
-        //fazer para todos os pares de grupos
-        for(int i = 0; i< solucao_atual.size() -1; i++){
-
-            double resultado_atual;
-            double resultado_vizinho; 
-
-            for(int i2=i+1;i2< solucao_atual.size();i2++){
-                //cout<<i<<", "<<i2 <<endl;
-
-                //para cada par de grupos nós trocamos o primeiro elemento
-                //de um grupo com o primeiro elemento de outro
-                //e adicionamos o resultado no array de vizinhos
+                //troca elementos de dois grupos da solução
                 funcoes.trocaElementos(solucao_atual[i],solucao_atual[i2],0,0);
 
-                //double resultado_atual = funcoes.get_total(this->solucao,this->instance.arr_Pair);
-               // double resultado_vizinho = funcoes.get_total(this->vizinhos.back().solucao,this->instance.arr_Pair);
-
-                
+                 
                 //adicionamos o vector de grupos com os elementos trocados no vizinho
                 Solution solucao1;
                 solucao1.instance = this->instance;
@@ -566,37 +544,29 @@ public:
                 vizinhos.back().vizinhos = {};
                 vizinhos.back().vizinhos.push_back(*this);
 
-
                 //restauramos a solução atual
                 funcoes.trocaElementos(solucao_atual[i],solucao_atual[i2],0,0);
 
-                //comparamos os resultados e interrompemos a busca se achamos um
-                //resultado melhor que a solução atual
-                resultado_atual = funcoes.get_total(this->solucao,this->instance.arr_Pair);
-                resultado_vizinho = funcoes.get_total(this->vizinhos.back().solucao,this->instance.arr_Pair);
+                //atualiza o valor do vizinho, para parar quando for maior que o atual
+                resultado_vizinho = funcoes.get_total(vizinhos.back().solucao,this->instance.arr_Pair);
 
-                if(resultado_atual < resultado_vizinho){
-                    cout<<"break"<<endl;
-                    break;                                       
-                }
-                cout<<"dentro do for"<<endl<<endl;
+                i2++;
+            }
 
-            }  
-
-            if(resultado_atual < resultado_vizinho){
-                cout<<"break"<<endl;
-                break;                                       
-            }  
+            i++;          
+        }
+        
+        this->vizinhos = vizinhos;
+        
+        //se nenhum vizinho é melhor que a solução atual
+        if(resultado_vizinho < resultado_atual){
+            return *this;
+        }
+        
+        else{
+            return this->vizinhos.back();
         }
 
-        cout<<"saiu do for"<<endl<<endl;
-
-        this->vizinhos = vizinhos;
-
-        //retornamos o vizinho da lista de vizinho do momento que paramos de buscar
-        //pois é o momento que achamos o vizinho melhor que a solução atual
-        return this->vizinhos.back();
-*/
     }
 
 
