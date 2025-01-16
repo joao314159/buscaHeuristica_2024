@@ -96,8 +96,21 @@ void resultados(Instance instance)
     cout<<endl<<endl;
     cout<<endl<<endl;
 
-    Solution solucao2 = solution.get_primeira_melhora();
-    resultado5 = funcoes.get_total(solucao2.solucao,instance.arr_Pair);
+    int index = solution.get_primeira_melhora();
+
+    Solution solution2;     
+   
+    if(index != -1){
+        cout<<"o primeiro melhor vizinho está na posição: "<<index<<endl;
+        solution2 = solution.vizinhos[index];
+    } 
+    else{
+        cout<<"não tem vizinho melhor."<<endl;
+        solution2 = solution;
+    }
+
+
+    resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
     cout<<"primeira melhora: "<<endl;
     cout<< std::setprecision (15) << resultado5 <<endl;
     
