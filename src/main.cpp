@@ -65,12 +65,10 @@ void resultados(Instance instance)
     //funcoes.trocaElementos(solution.solucao[0], solution.solucao[1],0,0);
     //resultado5 = funcoes.get_total(solution.solucao, instance.arr_Pair);
     
-    //////////////////////////////////
-    //////////////////////////////////
-    //////////////////////////////////
-    //melhor melhora
-
-    /*           
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    //melhor melhora              
         
         int i = solution.get_melhor_melhora();
 
@@ -80,7 +78,11 @@ void resultados(Instance instance)
             cout<<"índice: "<<i<<endl;
 
             if(i != -1){ 
-                solution2 = solution2.vizinhos[i];   
+                solution2 = solution2.vizinhos[i];
+
+                //remove o ponteiro para a solução anterior, para evitar consumo de memória
+                solution2.vizinhos.erase(solution2.vizinhos.begin());
+
                 i = solution2.get_melhor_melhora();
             }
             else{
@@ -90,55 +92,41 @@ void resultados(Instance instance)
 
         resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
         
-
-    */    
+       
 
     
 
-    //////////////////////////////////
-    //////////////////////////////////
-    //////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
     //primeira melhora
         
-        /*
-        int index = solution.get_primeira_melhora();
-
-        Solution solution2;     
-    
-        if(index != -1){
-            cout<<"o primeiro melhor vizinho está na posição: "<<index<<endl;
-            solution2 = solution.vizinhos[index];
-        } 
-        else{
-            cout<<"não tem vizinho melhor."<<endl;
-            solution2 = solution;
-        }
-
-
-        resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
-        cout<<"primeira melhora: "<<endl;
-        cout<< std::setprecision (15) << resultado5 <<endl;
-        */
-
+    /*
         int index = solution.get_primeira_melhora();
         Solution solution2 = solution;  
 
+        
         while(index != -1){
-             
+                
             cout<<"índice: "<<index<<endl;
 
             solution2 = solution2.vizinhos[index];
+
+            //remove o ponteiro para a solução anterior, para evitar consumo de memória
+            solution2.vizinhos.erase(solution2.vizinhos.begin());
+
             index = solution2.get_primeira_melhora();
 
         }
+       
 
         resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
 
+    */
 
-
-    //////////////////////////////////
-    //////////////////////////////////
-    //////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
 
     //resultados
     //melhor melhora
