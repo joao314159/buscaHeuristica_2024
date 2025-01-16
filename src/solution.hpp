@@ -605,7 +605,7 @@ public:
             cout<<"Não há vizinhos na lista de vizinhos"<<endl;
         }
         else{
-            double resultado = -10;
+            double resultado = -1;
             double auxiliar;            
             for(int i=0;i<lista_vizinhos.size();i++){
                 auxiliar = funcoes.get_total(lista_vizinhos[i].solucao,lista_vizinhos[i].instance.arr_Pair);
