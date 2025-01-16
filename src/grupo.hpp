@@ -16,6 +16,8 @@ public:
 
     vector<int> elementos = {};
 
+    vector<int> pontos = {};
+
     void imprimir()
     {
 
