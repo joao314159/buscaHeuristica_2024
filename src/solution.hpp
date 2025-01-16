@@ -503,8 +503,24 @@ public:
 
     }
 
+    //funções para vizinhança
+
+    void atribuir_ponto_elemento(int i,int i2){
+
+    }
 
 
+
+    void atribuir_pontos(){
+        //quanto maior a pontuação, mais o elemento está bem naquele grupo
+        for(int i = 0; i< this->solucao.size();i++){
+
+            for(int i2 = 0;i2< this->solucao[i].elementos.size();i++){
+                atribuir_ponto_elemento(i,i2);
+            }
+            
+        }
+    }
     
 
 
