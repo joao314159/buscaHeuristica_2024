@@ -538,6 +538,13 @@ public:
         grupo1.elementos[elementoGrupo1index] = grupo2.elementos[elementoGrupo2index];
         grupo2.elementos[elementoGrupo2index] = auxiliar;
 
+    }    
+
+    void trocaElementos2(Grupo& grupo1, Grupo& grupo2){
+
+
+
+
     }
 
 
