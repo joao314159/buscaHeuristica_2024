@@ -17,6 +17,8 @@ public:
     vector<Pair> arr_Pair;        // Todas as distancias e entre todos os elementos
     ////////////////////////////////////////////////////////////////////
 
+    double media;
+
     bool igual_Tam_Grupos; // Verifica se os grupos têm o mesmo tamanho
 
     Instance()
@@ -82,6 +84,19 @@ public:
         
         file.close();
         // cout << "Arquivo lido com sucesso!" << endl;
+
+        //calcula a média
+        double total = 0;
+        
+        for(int i =0; i < this->arr_Pair.size();i++){
+            total+= this->arr_Pair[i].distance_Element;
+        }
+
+        double tamanho = (double)arr_Pair.size();
+        this->media = total/tamanho;
+
+        cout<<"média: "<<this->media<<endl<<endl;
+
     }
 
     void to_String()
