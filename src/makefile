@@ -21,3 +21,6 @@ clean:
 # Regra padrão para rodar o executável
 run: $(TARGET)
 	./$(TARGET)
+
+# Regra para buildar o projeto
+build: clean $(TARGET)

@@ -20,7 +20,6 @@ public:
 
     void imprimir()
     {
-
         cout << "tamanho mínimo: " << tam_minimo << endl;
         cout << "tamanho máximo: " << tam_maximo << endl;
 

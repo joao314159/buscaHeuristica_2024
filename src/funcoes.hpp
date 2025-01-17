@@ -32,10 +32,9 @@ bool comparar_tam_minimo(Grupo grupo1, Grupo grupo2)
 class Funcoes
 {
 public:
-
-
-    int quantidade_pares(int a){
-        return a*(a-1)/2;
+    int quantidade_pares(int a)
+    {
+        return a * (a - 1) / 2;
     }
 
     void ordenar_distancias(vector<Pair> &distances)
@@ -76,14 +75,12 @@ public:
 
         // grupo.quantidade_elementos+=1;
         grupo.elementos.push_back(elementos[i]);
-
         elementos.erase(elementos.begin() + i);
     }
 
     // usa a classe Lista_elementos
     void alocar_elemento2(Grupo &grupo, Lista_elementos &lista_elementos, int elemento)
     {
-
         if (grupo.get_quantidade_elementos() == grupo.tam_maximo)
         {
             cout << "ERRO!!!!! TENTOU ADICIONAR ELEMENTO EM UM GRUPO CHEIO!!" << endl;
@@ -105,7 +102,6 @@ public:
     // ainda poderemos preencher o mínimo de elementos de todos os grupos.
     int alocar_elemento3(Grupo &grupo, Lista_elementos &lista_elementos, vector<int> elementos, int elemento, int &quantidade_elementos_minimos)
     {
-
         cout << elemento << endl;
         if (grupo.get_quantidade_elementos() == grupo.tam_maximo)
         {
@@ -123,7 +119,7 @@ public:
 
             // se o elemento estiver no final do vector<elementos> podemos
             // atualizar o vector<elementos> sem riscos
-            if (elemento = elementos.back())
+            if (elemento == elementos.back())
             {
                 elementos.pop_back();
             }
@@ -166,7 +162,6 @@ public:
 
     vector<Grupo> get_grupos(Instance instance)
     {
-
         vector<Grupo> grupos;
 
         for (int i = 0; i < instance.quant_Grup; i++)
@@ -225,7 +220,6 @@ public:
 
     double get_total_grupo(Grupo grupo, vector<Pair> distances)
     {
-
         int quantidade = grupo.elementos.size();
         double total = 0;
         Pair par;
@@ -259,7 +253,6 @@ public:
     // ATENÇÃO. não força a inserção em grupo que ainda não tem o tamanho mínimo cheio
     int get_best_group(vector<Grupo> grupos, int elemento, vector<Pair> distances)
     {
-
         // criamos um array resultados com quantidade de grupos tamanho
         // cada posição do array contém um inteiro
         // para cada grupo compara a distância do elemento com x elementos do grupo
@@ -289,7 +282,6 @@ public:
         // percorremos cada grupo, atribuindo um valor para a posição correspondente no vetor no final
         for (int i = 0; i < grupos.size(); i++)
         {
-
             resultados[i] = 0;
 
             if (grupos[i].get_quantidade_elementos() > 0)
@@ -341,22 +333,19 @@ public:
                  << endl;
         }
 
-        delete resultados;
-
+        delete[] resultados;
         return grupos[maior_position].i;
     }
 
     // para inserir em grupos que ainda não preencheram o tamanho mínimo
     int get_best_group2(vector<Grupo> grupos, int elemento, vector<Pair> distances)
     {
-
         // criamos um array resultados com quantidade de grupos tamanho
         // cada posição do array contém um inteiro
         // para cada grupo compara a distância do elemento com x elementos do grupo
         // calcula a média
         // salva o resultado no array resultados
         // retornar o índice da posição que tem o maior valor
-
         // atenção! grupos ordenados não tem correspondência de índices com grupos desordenados
         // usar o atributo i da classe Grupo para resolver o problema
 
@@ -369,7 +358,6 @@ public:
         int maior;
         // aqui fica a posição desse valor no array resultados, indicando qual o grupo
         int maior_position;
-
         int quantidade_elementos;
         quantidade_elementos = distances[distances.size() - 1].second_Element + 1;
 
@@ -379,12 +367,10 @@ public:
         // percorremos cada grupo, atribuindo um valor para a posição correspondente no vetor no final
         for (int i = 0; i < grupos.size(); i++)
         {
-
             resultados[i] = 0;
 
             if (grupos[i].get_quantidade_elementos() > 0)
             {
-
                 for (int i2 = 0; i2 < grupos[i].get_quantidade_elementos(); i2++)
                 {
 
@@ -413,6 +399,7 @@ public:
 
         // podemos adicionar um elemento em um grupo vazio, mas não em um grupo cheio
         maior = -5;
+
         for (int i = 0; i < grupos.size(); i++)
         {
             if (resultados[i] > maior)
@@ -431,7 +418,7 @@ public:
                  << endl;
         }
 
-        delete resultados;
+        delete[] resultados;
 
         return grupos[maior_position].i;
     }
@@ -440,7 +427,6 @@ public:
     // ao tamanho máximo do grupo
     int get_best_group3(vector<Grupo> grupos, int elemento, vector<Pair> distances)
     {
-
         // criamos um array resultados com quantidade de grupos tamanho
         // cada posição do array contém um inteiro
         // para cada grupo compara a distância do elemento com x elementos do grupo
@@ -453,7 +439,6 @@ public:
 
         // esse array contém, para cada grupo, um valor representando o quão vantajoso é colocar o elemento nesse grupo
         double *resultados = new double[grupos.size()];
-
         bool todos_grupos_cheios = true;
 
         // aqui fica o maior valor do array resultados
@@ -470,7 +455,6 @@ public:
         // percorremos cada grupo, atribuindo um valor para a posição correspondente no vetor no final
         for (int i = 0; i < grupos.size(); i++)
         {
-
             resultados[i] = 0;
 
             if (grupos[i].get_quantidade_elementos() > 0)
@@ -478,7 +462,6 @@ public:
 
                 for (int i2 = 0; i2 < grupos[i].get_quantidade_elementos(); i2++)
                 {
-
                     par = get_pair(elemento, grupos[i].elementos[i2], distances, quantidade_elementos);
                     resultados[i] += (double)par.get_distance_Element();
                 }
@@ -524,28 +507,20 @@ public:
                  << endl;
         }
 
-        delete resultados;
+        delete[] resultados;
 
         return grupos[maior_position].i;
     }
 
-
-    void trocaElementos(Grupo& grupo1, Grupo& grupo2, int elementoGrupo1index, int elementoGrupo2index){
-
-        int auxiliar = grupo1.elementos[elementoGrupo1index];  
-         
+    void trocaElementos(Grupo &grupo1, Grupo &grupo2, int elementoGrupo1index, int elementoGrupo2index)
+    {
+        int auxiliar = grupo1.elementos[elementoGrupo1index];
 
         grupo1.elementos[elementoGrupo1index] = grupo2.elementos[elementoGrupo2index];
         grupo2.elementos[elementoGrupo2index] = auxiliar;
-
-    }    
-
-    void trocaElementos2(Grupo& grupo1, Grupo& grupo2){
-
-
-
-
     }
 
-
+    void trocaElementos2(Grupo &grupo1, Grupo &grupo2)
+    {
+    }
 };

@@ -10,104 +10,98 @@
 
 using namespace std;
 
+// g++ main.cpp -o main.exe; ./main.exe
 
-//g++ main.cpp -o main.exe; ./main.exe
+// TODO: escolher duas vizinhanças
+// TODO: fazer o percorrimento acontecer por uma quantidade de tempo
+// TODO: fazer a busca tabu
 
-
-//escolher duas vizinhanças
-
-//fazer o percorrimento acontecer por uma quantidade de tempo
-
-//fazer a busca tabu
-
-
-//Imprime os resultados.
+// Imprime os resultados.
 void resultados(Instance instance)
 {
     Funcoes funcoes;
     Solution solution(instance);
 
-    //vector<Grupo> grupos1 = solution.calcular_resultado();
-    //vector<Grupo> grupos3 = solution.calcular_resultado2();
-    //vector<Grupo> grupos2 = solution.calcular_resultado3();
-    //vector<Grupo> grupos4 = solution.calcular_resultado4();
+    // vector<Grupo> grupos1 = solution.calcular_resultado();
+    // vector<Grupo> grupos3 = solution.calcular_resultado2();
+    // vector<Grupo> grupos2 = solution.calcular_resultado3();
+    // vector<Grupo> grupos4 = solution.calcular_resultado4();
     vector<Grupo> grupos5 = solution.calcular_resultado5();
 
-    //double resultado1 = funcoes.get_total(grupos1, instance.arr_Pair);
-    //double resultado2 = funcoes.get_total(grupos2, instance.arr_Pair);
-    //double resultado3 = funcoes.get_total(grupos3, instance.arr_Pair);
-    //double resultado4 = funcoes.get_total(grupos4, instance.arr_Pair);
+    // double resultado1 = funcoes.get_total(grupos1, instance.arr_Pair);
+    // double resultado2 = funcoes.get_total(grupos2, instance.arr_Pair);
+    // double resultado3 = funcoes.get_total(grupos3, instance.arr_Pair);
+    // double resultado4 = funcoes.get_total(grupos4, instance.arr_Pair);
     double resultado5 = funcoes.get_total(grupos5, instance.arr_Pair);
 
-/*
-    cout<<"resultado 1: ";
-    cout << std::setprecision (15) << resultado1 <<endl;
-    
-    cout<<"resultado 2: ";
-    cout << std::setprecision (15) << resultado2 <<endl;
+    /*
+        cout<<"resultado 1: ";
+        cout << std::setprecision (15) << resultado1 <<endl;
 
-    cout<<"resultado 3: ";
-    cout << std::setprecision (15) << resultado3 <<endl;
+        cout<<"resultado 2: ";
+        cout << std::setprecision (15) << resultado2 <<endl;
 
-    cout<<"resultado 4: ";
-    cout << std::setprecision (15) << resultado4 <<endl;
+        cout<<"resultado 3: ";
+        cout << std::setprecision (15) << resultado3 <<endl;
 
-    cout<<"resultado 5: ";
+        cout<<"resultado 4: ";
+        cout << std::setprecision (15) << resultado4 <<endl;
 
-    */
+        cout<<"resultado 5: ";
 
-    cout<<"resultado antes da busca local: "<<endl;
-    cout<< std::setprecision (15) << resultado5 <<endl;
+        */
 
-    cout<<"trocando elementos de dois grupos: "<<endl;
-    cout<<"resultado: "<<endl;
+    cout << "resultado antes da busca local: " << endl;
+    cout << std::setprecision(15) << resultado5 << endl;
 
-    //funcoes.trocaElementos(solution.solucao[0], solution.solucao[1],0,0);
-    //resultado5 = funcoes.get_total(solution.solucao, instance.arr_Pair);
-    
+    cout << "trocando elementos de dois grupos: " << endl;
+    cout << "resultado: " << endl;
+
+    // funcoes.trocaElementos(solution.solucao[0], solution.solucao[1],0,0);
+    // resultado5 = funcoes.get_total(solution.solucao, instance.arr_Pair);
+
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
-    //melhor melhora              
-        
-        int i = solution.get_melhor_melhora();
+    // melhor melhora
 
-        Solution solution2 = solution;
+    int i = solution.get_melhor_melhora();
 
-        while(i != -1){
-            cout<<"índice: "<<i<<endl;
+    Solution solution2 = solution;
 
-            if(i != -1){ 
-                solution2 = solution2.vizinhos[i];
+    while (i != -1)
+    {
+        cout << "índice: " << i << endl;
 
-                //remove o ponteiro para a solução anterior, para evitar consumo de memória
-                solution2.vizinhos.erase(solution2.vizinhos.begin());
+        if (i != -1)
+        {
+            solution2 = solution2.vizinhos[i];
 
-                i = solution2.get_melhor_melhora();
-            }
-            else{
-                cout<<"a solução atual é a melhor. "<<endl;
-            }
+            // remove o ponteiro para a solução anterior, para evitar consumo de memória
+            solution2.vizinhos.erase(solution2.vizinhos.begin());
+
+            i = solution2.get_melhor_melhora();
         }
+        else
+        {
+            cout << "a solução atual é a melhor. " << endl;
+        }
+    }
 
-        resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
-        
-       
-
-    
+    resultado5 = funcoes.get_total(solution2.solucao, instance.arr_Pair);
 
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
-    //primeira melhora
-        
+    // primeira melhora
+
     /*
         int index = solution.get_primeira_melhora();
-        Solution solution2 = solution;  
+        Solution solution2 = solution;
 
-        
+
         while(index != -1){
-                
+
             cout<<"índice: "<<index<<endl;
 
             solution2 = solution2.vizinhos[index];
@@ -118,7 +112,7 @@ void resultados(Instance instance)
             index = solution2.get_primeira_melhora();
 
         }
-       
+
 
         resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
 
@@ -128,138 +122,133 @@ void resultados(Instance instance)
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
 
-    //resultados
-    //melhor melhora
+    // resultados
+    // melhor melhora
     //-1 0 9 -1 42 36 101
-    //primeira melhora
+    // primeira melhora
     //-1 0 8 -1 42 1 5
 
-    
-
-    cout<< std::setprecision (15) << resultado5 <<endl;
-
-    
-    cout<<endl<<endl;
-    cout<<endl<<endl;
-    
-
+    cout << std::setprecision(15) << resultado5 << endl;
+    cout << endl
+         << endl;
+    cout << endl
+         << endl;
 }
 
 int main()
 {
     setlocale(LC_ALL, "Portuguese");
 
-
     vector<string> fileNames = {
-    "instances/Geo/Geo_n010_ss_01.txt",
-    "instances/Geo/Geo_n012_ss_01.txt" ,
-    "instances/Geo/Geo_n030_ss_01.txt" ,
-    "instances/Geo/Geo_n060_ss_01.txt" ,
-    "instances/Geo/Geo_n120_ss_01.txt" ,
-    "instances/Geo/Geo_n240_ss_01.txt" ,
-    "instances/Geo/Geo_n480_ss_01.txt" ,
+        "instances/Geo/Geo_n010_ss_01.txt",
+        "instances/Geo/Geo_n012_ss_01.txt",
+        "instances/Geo/Geo_n030_ss_01.txt",
+        "instances/Geo/Geo_n060_ss_01.txt",
+        "instances/Geo/Geo_n120_ss_01.txt",
+        "instances/Geo/Geo_n240_ss_01.txt",
+        "instances/Geo/Geo_n480_ss_01.txt",
 
-    /*
-    "instances/Geo/Geo_n960_ss_01.txt",
+        /*
+        "instances/Geo/Geo_n960_ss_01.txt",
 
-    "instances/RanInt/RanInt_n010_ss_01.txt",
-    "instances/RanInt/RanInt_n012_ss_01.txt", 
-    "instances/RanInt/RanInt_n030_ss_01.txt",
-    "instances/RanInt/RanInt_n060_ss_01.txt",
-    "instances/RanInt/RanInt_n120_ss_01.txt",
-    "instances/RanInt/RanInt_n240_ss_01.txt",
-    "instances/RanInt/RanInt_n480_ss_01.txt",
-    "instances/RanInt/RanInt_n960_ss_01.txt",
+        "instances/RanInt/RanInt_n010_ss_01.txt",
+        "instances/RanInt/RanInt_n012_ss_01.txt",
+        "instances/RanInt/RanInt_n030_ss_01.txt",
+        "instances/RanInt/RanInt_n060_ss_01.txt",
+        "instances/RanInt/RanInt_n120_ss_01.txt",
+        "instances/RanInt/RanInt_n240_ss_01.txt",
+        "instances/RanInt/RanInt_n480_ss_01.txt",
+        "instances/RanInt/RanInt_n960_ss_01.txt",
 
-    "instances/RanReal/RanReal_n010_ss_01.txt",
-    "instances/RanReal/RanReal_n012_ss_01.txt", 
-    "instances/RanReal/RanReal_n030_ss_01.txt",
-    "instances/RanReal/RanReal_n060_ss_01.txt",
-    "instances/RanReal/RanReal_n120_ss_01.txt",
-    "instances/RanReal/RanReal_n240_ss_01.txt",
-    "instances/RanReal/RanReal_n480_ss_01.txt",
-    "instances/RanReal/RanReal_n960_ss_01.txt", 
+        "instances/RanReal/RanReal_n010_ss_01.txt",
+        "instances/RanReal/RanReal_n012_ss_01.txt",
+        "instances/RanReal/RanReal_n030_ss_01.txt",
+        "instances/RanReal/RanReal_n060_ss_01.txt",
+        "instances/RanReal/RanReal_n120_ss_01.txt",
+        "instances/RanReal/RanReal_n240_ss_01.txt",
+        "instances/RanReal/RanReal_n480_ss_01.txt",
+        "instances/RanReal/RanReal_n960_ss_01.txt",
 
-    "instances/Geo/Geo_n010_ds_01.txt",
-    "instances/Geo/Geo_n012_ds_01.txt",
-    "instances/Geo/Geo_n030_ds_01.txt", 
-    "instances/Geo/Geo_n060_ds_01.txt",
-    "instances/Geo/Geo_n120_ds_01.txt",
-    "instances/Geo/Geo_n240_ds_01.txt",
-    "instances/Geo/Geo_n480_ds_01.txt",
-    "instances/Geo/Geo_n960_ds_01.txt",
+        "instances/Geo/Geo_n010_ds_01.txt",
+        "instances/Geo/Geo_n012_ds_01.txt",
+        "instances/Geo/Geo_n030_ds_01.txt",
+        "instances/Geo/Geo_n060_ds_01.txt",
+        "instances/Geo/Geo_n120_ds_01.txt",
+        "instances/Geo/Geo_n240_ds_01.txt",
+        "instances/Geo/Geo_n480_ds_01.txt",
+        "instances/Geo/Geo_n960_ds_01.txt",
 
-    "instances/RanInt/RanInt_n010_ds_01.txt" ,
-    "instances/RanInt/RanInt_n012_ds_01.txt" ,
-    "instances/RanInt/RanInt_n030_ds_01.txt" ,
-    "instances/RanInt/RanInt_n060_ds_01.txt" ,
-    "instances/RanInt/RanInt_n120_ds_01.txt" ,
-    "instances/RanInt/RanInt_n240_ds_01.txt" ,
-    "instances/RanInt/RanInt_n480_ds_01.txt" ,
-    "instances/RanInt/RanInt_n960_ds_01.txt",
+        "instances/RanInt/RanInt_n010_ds_01.txt" ,
+        "instances/RanInt/RanInt_n012_ds_01.txt" ,
+        "instances/RanInt/RanInt_n030_ds_01.txt" ,
+        "instances/RanInt/RanInt_n060_ds_01.txt" ,
+        "instances/RanInt/RanInt_n120_ds_01.txt" ,
+        "instances/RanInt/RanInt_n240_ds_01.txt" ,
+        "instances/RanInt/RanInt_n480_ds_01.txt" ,
+        "instances/RanInt/RanInt_n960_ds_01.txt",
 
-    "instances/RanReal/RanReal_n010_ds_01.txt" ,
-    "instances/RanReal/RanReal_n012_ds_01.txt" ,
-    "instances/RanReal/RanReal_n030_ds_01.txt" ,
-    "instances/RanReal/RanReal_n060_ds_01.txt",
-    "instances/RanReal/RanReal_n120_ds_01.txt" ,
-    "instances/RanReal/RanReal_n240_ds_01.txt" ,
-    "instances/RanReal/RanReal_n480_ds_01.txt",
-    "instances/RanReal/RanReal_n960_ds_01.txt"
+        "instances/RanReal/RanReal_n010_ds_01.txt" ,
+        "instances/RanReal/RanReal_n012_ds_01.txt" ,
+        "instances/RanReal/RanReal_n030_ds_01.txt" ,
+        "instances/RanReal/RanReal_n060_ds_01.txt",
+        "instances/RanReal/RanReal_n120_ds_01.txt" ,
+        "instances/RanReal/RanReal_n240_ds_01.txt" ,
+        "instances/RanReal/RanReal_n480_ds_01.txt",
+        "instances/RanReal/RanReal_n960_ds_01.txt"
 
-    */
+        */
     };
 
     vector<string> resultados_artigo{
-"3660.67",
-"716.46",
-"13776.34",
-"45374.32",
-"99906.5",
-"185 973.83",
-"não foi calculado",
-"não foi calculado",
-"1292.00",
-"985.00",
-"5324.00",
-"18408.00",
-"40577.00",
-"129877.00",
-"não foi calculado",
-"não foi calculado",
-"1427.85",
-"956.43",
-"5503.12",
-"18164.17",
-"42047.6",
-"128619.53",
-"não foi calculado",
-"não foi calculado",
-"3864.69",
-"807.68",
-"14358.40",
-"48163.77"
-/*
-"108971.98",
-"190288.26",
-"não foi calculado",
-"não foi calculado",
-"1325.00",
-"1059.00",
-"5607.00",
-"19080.00",
-"44589.00",
-"137150.00",
-"não foi calculado",
-"não foi calculado",
-"1437.81",
-"1050.35",
-"5595.16",
-"18967.72",
-"43420.36",
-"133756.40",
-"não foi calculado",
-"não foi calculado"*/
+        "3660.67",
+        "716.46",
+        "13776.34",
+        "45374.32",
+        "99906.5",
+        "185 973.83",
+        "não foi calculado",
+        "não foi calculado",
+        "1292.00",
+        "985.00",
+        "5324.00",
+        "18408.00",
+        "40577.00",
+        "129877.00",
+        "não foi calculado",
+        "não foi calculado",
+        "1427.85",
+        "956.43",
+        "5503.12",
+        "18164.17",
+        "42047.6",
+        "128619.53",
+        "não foi calculado",
+        "não foi calculado",
+        "3864.69",
+        "807.68",
+        "14358.40",
+        "48163.77"
+        /*
+        "108971.98",
+        "190288.26",
+        "não foi calculado",
+        "não foi calculado",
+        "1325.00",
+        "1059.00",
+        "5607.00",
+        "19080.00",
+        "44589.00",
+        "137150.00",
+        "não foi calculado",
+        "não foi calculado",
+        "1437.81",
+        "1050.35",
+        "5595.16",
+        "18967.72",
+        "43420.36",
+        "133756.40",
+        "não foi calculado",
+        "não foi calculado"*/
 
         /*
         Geo_n010_ss_01.txt 40 12 20 3660.67 3660.67 0 0.64 503
@@ -285,21 +274,19 @@ RanReal_n060_ss_01.txt 720 66 360 18 164.17 82 653.29 78 1800.77 813 249
 RanReal_nl20_ss_01.txt 2400 130 1200 42 047.6 352 947.83 88 1800.24 16 368
 RanReal_n240_ss_01.txt 5760 252 2880 128 619.53 1 424 593.19 91 1812.2 177
 RanReal_n480_ss_01.txt 19 200 500 9600 — — — — —
-RanReal_n960_ss_01.txt 46 080 984 23 040 
+RanReal_n960_ss_01.txt 46 080 984 23 040
         */
     };
 
     // vector<Instance> instances[fileNames.size()];
     Instance instances[fileNames.size()];
 
-    
-   
-    for (size_t i = 0; i < fileNames.size(); ++i) {
+    for (size_t i = 0; i < fileNames.size(); ++i)
+    {
         instances[i].read_File(fileNames[i]);
     }
 
     /*
-
     // #pragma parallel for
     for(size_t i = 0; i < fileNames.size(); i++) {
         if(i == 0)
@@ -318,196 +305,187 @@ RanReal_n960_ss_01.txt 46 080 984 23 040
         cout << endl;
         resultados(instances[i]);
     }
-   
-*/
-
-
-vector<string> fileNames2{
-
-"RanInt_n120_ds_01",
-"RanInt_n120_ds_02",
-"RanInt_n120_ds_03",
-"RanInt_n120_ds_04",  
-"RanInt_n120_ds_05", 
-"RanInt_n120_ds_06",  
-"RanInt_n120_ds_07",  
-"RanInt_n120_ds_08", 
-"RanInt_n120_ds_09",  
-"RanInt_n120_ds_10",  
-"RanInt_n240_ds_01",  
-"RanInt_n240_ds_02",  
-"RanInt_n240_ds_03",  
-"RanInt_n240_ds_04",  
-"RanInt_n240_ds_05",  
-"RanInt_n240_ds_06",  
-"RanInt_n240_ds_07", 
-"RanInt_n240_ds_08", 
-"RanInt_n240_ds_09", 
-"RanInt_n240_ds_10"
-
-/*
-"RanInt_n480_ds_01",  
-"RanInt_n480_ds_02", 
-"RanInt_n480_ds_03", 
-"RanInt_n480_ds_04",
-"RanInt_n480_ds_05", 
-"RanInt_n480_ds_06", 
-"RanInt_n480_ds_07",  
-"RanInt_n480_ds_08",  
-"RanInt_n480_ds_09", 
-"RanInt_n480_ds_10",  
-"RanInt_n960_ds_01",  
-"RanInt_n960_ds_02", 
-"RanInt_n960_ds_03", 
-"RanInt_n960_ds_04",
-"RanInt_n960_ds_05", 
-"RanInt_n960_ds_06", 
-"RanInt_n960_ds_07", 
-"RanInt_n960_ds_08", 
-"RanInt_n960_ds_09",  
-"RanInt_n960_ds_10" */
-};
-
-vector<double> resultados2{
-
-51146.00,
-51372.00, 
-50248.00, 
-50436.00,
-50008.00, 
-49767.00,
-50282.00, 
-50385.00, 
-50451.00, 
-50407.00, 
-160596.00,
-160468.00, 
-160400.00, 
-162619.00, 
-160841.00, 
-161334.00, 
-160412.00, 
-158321.00,
-160799.00,
-  160299.00
-  /*
-  390718.00, 
-  389327.00,
-  389098.00, 
-  392628.00, 
-  389981.00, 
-  390088.00, 
-  390181.00,
-  391339.00,
-  389116.00, 
-  394099.00, 
-  1244347.00, 
-  1242006.00, 
-  1242461.00, 
-  1243122.00, 
-  1241729.00, 
-  1239217.00, 
-  1242811.00, 
-  1239231.00, 
-  1240150.00, 
-  1242428.00 */
-};
-
-/*
-  Geo_n010_ss_01.txt
-    Geo_n012_ss_01.txt 
-    Geo_n030_ss_01.txt 
-    Geo_n060_ss_01.txt 
-    Geo_nl20_ss_01.txt 
-    Geo_n240_ss_01.txt 
-    Geo_n480_ss_01.txt 
-    Geo_n960_ss_01.txt
-
-    RanInt_n010_ss_01.txt 
-    RanInt_n012_ss_01.txt 
-    RanInt_n030_ss_01.txt 
-    RanInt_n060_ss_01.txt 
-    RanInt_nl20_ss_01.txt 
-    RanInt_n240_ss_01.txt 
-    RanInt_n480_ss_01.txt 
-    RanInt_n960_ss_01.txt 
-
-    RanReal_n010_ss_01.txt 
-    RanReal_n012_ss_01.txt 
-    RanReal_n030_ss_01.txt 
-    RanReal_n060_ss_01.txt 
-    RanReal_nl20_ss_01.txt 
-    RanReal_n240_ss_01.txt
-    RanReal_n480_ss_01.txt 
-    RanReal_n960_ss_01.txt 
-
-    Geo_n010_ds_01.txt 
-    Geo_n012_ds_01.txt 
-    Geo_n030_ds_01.txt 
-    Geo_n060_ds_01.txt 
-    Geo_nl20_ds_01.txt 
-    Geo_n240_ds_01.txt 
-    Geo_n480_ds_01.txt 
-    Geo_n960_ds_01.txt
-
-    RanInt_n010_ds_01.txt 
-    RanInt_n012_ds_01.txt 
-    RanInt_n030_ds_01.txt 
-    RanInt_n060_ds_01.txt 
-    RanInt_nl20_ds_01.txt 
-    RanInt_n240_ds_01.txt 
-    RanInt_n480_ds_01.txt 
-    RanInt_n960_ds_01.txt
-
-    RanReal_n010_ds_01.txt 
-    RanReal_n012_ds_01.txt 
-    RanReal_n030_ds_01.txt 
-    RanReal_n060_ds_01.txt
-    RanReal_nl20_ds_01.txt 
-    RanReal_n240_ds_01.txt 
-    RanReal_n480_ds_01.txt 
-    RanReal_n960_ds_01.txt
 
 */
 
-   
+    vector<string> fileNames2{
+        "RanInt_n120_ds_01",
+        "RanInt_n120_ds_02",
+        "RanInt_n120_ds_03",
+        "RanInt_n120_ds_04",
+        "RanInt_n120_ds_05",
+        "RanInt_n120_ds_06",
+        "RanInt_n120_ds_07",
+        "RanInt_n120_ds_08",
+        "RanInt_n120_ds_09",
+        "RanInt_n120_ds_10",
+        "RanInt_n240_ds_01",
+        "RanInt_n240_ds_02",
+        "RanInt_n240_ds_03",
+        "RanInt_n240_ds_04",
+        "RanInt_n240_ds_05",
+        "RanInt_n240_ds_06",
+        "RanInt_n240_ds_07",
+        "RanInt_n240_ds_08",
+        "RanInt_n240_ds_09",
+        "RanInt_n240_ds_10"
 
-    for(size_t i = 0; i < fileNames.size(); i++) {
+        /*
+        "RanInt_n480_ds_01",
+        "RanInt_n480_ds_02",
+        "RanInt_n480_ds_03",
+        "RanInt_n480_ds_04",
+        "RanInt_n480_ds_05",
+        "RanInt_n480_ds_06",
+        "RanInt_n480_ds_07",
+        "RanInt_n480_ds_08",
+        "RanInt_n480_ds_09",
+        "RanInt_n480_ds_10",
+        "RanInt_n960_ds_01",
+        "RanInt_n960_ds_02",
+        "RanInt_n960_ds_03",
+        "RanInt_n960_ds_04",
+        "RanInt_n960_ds_05",
+        "RanInt_n960_ds_06",
+        "RanInt_n960_ds_07",
+        "RanInt_n960_ds_08",
+        "RanInt_n960_ds_09",
+        "RanInt_n960_ds_10" */
+    };
 
-        cout<<endl;
-        cout<<"instância:"<<endl;
-        cout<<fileNames[i]<<endl;
+    vector<double> resultados2{
+
+        51146.00,
+        51372.00,
+        50248.00,
+        50436.00,
+        50008.00,
+        49767.00,
+        50282.00,
+        50385.00,
+        50451.00,
+        50407.00,
+        160596.00,
+        160468.00,
+        160400.00,
+        162619.00,
+        160841.00,
+        161334.00,
+        160412.00,
+        158321.00,
+        160799.00,
+        160299.00
+        /*
+        390718.00,
+        389327.00,
+        389098.00,
+        392628.00,
+        389981.00,
+        390088.00,
+        390181.00,
+        391339.00,
+        389116.00,
+        394099.00,
+        1244347.00,
+        1242006.00,
+        1242461.00,
+        1243122.00,
+        1241729.00,
+        1239217.00,
+        1242811.00,
+        1239231.00,
+        1240150.00,
+        1242428.00 */
+    };
+
+    /*
+      Geo_n010_ss_01.txt
+        Geo_n012_ss_01.txt
+        Geo_n030_ss_01.txt
+        Geo_n060_ss_01.txt
+        Geo_nl20_ss_01.txt
+        Geo_n240_ss_01.txt
+        Geo_n480_ss_01.txt
+        Geo_n960_ss_01.txt
+
+        RanInt_n010_ss_01.txt
+        RanInt_n012_ss_01.txt
+        RanInt_n030_ss_01.txt
+        RanInt_n060_ss_01.txt
+        RanInt_nl20_ss_01.txt
+        RanInt_n240_ss_01.txt
+        RanInt_n480_ss_01.txt
+        RanInt_n960_ss_01.txt
+
+        RanReal_n010_ss_01.txt
+        RanReal_n012_ss_01.txt
+        RanReal_n030_ss_01.txt
+        RanReal_n060_ss_01.txt
+        RanReal_nl20_ss_01.txt
+        RanReal_n240_ss_01.txt
+        RanReal_n480_ss_01.txt
+        RanReal_n960_ss_01.txt
+
+        Geo_n010_ds_01.txt
+        Geo_n012_ds_01.txt
+        Geo_n030_ds_01.txt
+        Geo_n060_ds_01.txt
+        Geo_nl20_ds_01.txt
+        Geo_n240_ds_01.txt
+        Geo_n480_ds_01.txt
+        Geo_n960_ds_01.txt
+
+        RanInt_n010_ds_01.txt
+        RanInt_n012_ds_01.txt
+        RanInt_n030_ds_01.txt
+        RanInt_n060_ds_01.txt
+        RanInt_nl20_ds_01.txt
+        RanInt_n240_ds_01.txt
+        RanInt_n480_ds_01.txt
+        RanInt_n960_ds_01.txt
+
+        RanReal_n010_ds_01.txt
+        RanReal_n012_ds_01.txt
+        RanReal_n030_ds_01.txt
+        RanReal_n060_ds_01.txt
+        RanReal_nl20_ds_01.txt
+        RanReal_n240_ds_01.txt
+        RanReal_n480_ds_01.txt
+        RanReal_n960_ds_01.txt
+
+    */
+
+    for (size_t i = 0; i < fileNames.size(); i++)
+    {
         cout << endl;
-        cout<<"resultado encontrado pelo algoritmo: "<<endl;
+        cout << "instância:" << endl;
+        cout << fileNames[i] << endl;
+        cout << endl;
+        cout << "resultado encontrado pelo algoritmo: " << endl;
         resultados(instances[i]);
-        cout<<"resultado da tabela: "<<endl;
-        cout<<resultados_artigo[i]<<endl;
-        cout<<endl;
-
-    }
-
-    
-   /*
-     for(size_t i = 0; i < fileNames.size(); i++) {
-
-        Instance instance;
-        instance.read_File(fileNames[i]);
-        Solution solucao(instance); 
-        double resultado = solucao.limite_superior();
-
-        cout<<endl;
-        cout<<"instância:"<<endl;
-        cout<<fileNames[i]<<endl;
+        cout << "resultado da tabela: " << endl;
+        cout << resultados_artigo[i] << endl;
         cout << endl;
-        cout<<"resultado encontrado pelo algoritmo: "<<endl;
-        cout<<resultado<<endl;
-        cout<<"resultado da tabela: "<<endl;
-        cout<<resultados_artigo[i]<<endl;
-        cout<<endl;
-
     }
 
-*/
-    
+    /*
+      for(size_t i = 0; i < fileNames.size(); i++) {
+         Instance instance;
+         instance.read_File(fileNames[i]);
+         Solution solucao(instance);
+         double resultado = solucao.limite_superior();
+
+         cout<<endl;
+         cout<<"instância:"<<endl;
+         cout<<fileNames[i]<<endl;
+         cout << endl;
+         cout<<"resultado encontrado pelo algoritmo: "<<endl;
+         cout<<resultado<<endl;
+         cout<<"resultado da tabela: "<<endl;
+         cout<<resultados_artigo[i]<<endl;
+         cout<<endl;
+     }
+
+ */
     return 0;
 }

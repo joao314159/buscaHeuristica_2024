@@ -72,6 +72,7 @@ public:
         // Armazena as informações das distâncias
         int first_Elem, second_Elem;
         double distance;
+        
         while (getline(file, line))
         {
             stringstream string_stream(line);
