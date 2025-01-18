@@ -3,10 +3,12 @@
 #include <sstream>
 #include <vector>
 #include <iomanip>
+#include <chrono>
 
 #include "instance.hpp"
 #include "pair.hpp"
 #include "solution.hpp"
+
 
 using namespace std;
 
@@ -95,6 +97,8 @@ void resultados(Instance instance)
     ////////////////////////////////////////////////////////////////////
     // primeira melhora
 
+        //marca o início do tempo para essa instância
+        auto start = std::chrono::high_resolution_clock::now();
     
         int index = solution.get_primeira_melhora2();
         Solution solution2 = solution;
@@ -116,7 +120,11 @@ void resultados(Instance instance)
 
         resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
 
-    
+        //marca o final do tempo para essa instância
+        auto end = std::chrono::high_resolution_clock::now();
+
+        // Calcula o tempo decorrido
+        std::chrono::duration<double> duration = end - start;
 
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
@@ -129,6 +137,7 @@ void resultados(Instance instance)
     //-1 0 8 -1 42 1 5
 
     cout << std::setprecision(15) << resultado5 << endl;
+    cout<<"tempo de execução: "<< duration.count()<<" segundos."<<endl;
     cout << endl
          << endl;
     cout << endl
