@@ -520,7 +520,17 @@ public:
         grupo2.elementos[elementoGrupo2index] = auxiliar;
     }
 
+    //troca os últimos elementos
     void trocaElementos2(Grupo &grupo1, Grupo &grupo2)
-    {
+    {   
+        int auxiliar = grupo1.elementos[grupo1.elementos.size()-1];
+        
+        grupo1.elementos.pop_back();
+        grupo1.elementos.push_back(grupo2.elementos[grupo2.elementos.size()-1]);
+
+        grupo2.elementos.pop_back();
+        grupo2.elementos.push_back(auxiliar);
+
     }
+    
 };
