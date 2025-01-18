@@ -14,9 +14,34 @@ using namespace std;
 
 // g++ main.cpp -o main.exe; ./main.exe
 
-// TODO: escolher duas vizinhanças
-// TODO: fazer o percorrimento acontecer por uma quantidade de tempo
+// TODO: escolher duas vizinhanças PRONTO
+// TODO: fazer o percorrimento acontecer por uma quantidade de tempo PRONTO
 // TODO: fazer a busca tabu
+
+void tabu_search(Instance instance){
+
+    Funcoes funcoes;
+    Solution solution(instance);
+
+    Solution tabu_list[10];
+
+    for(int i = 0; i < 10;i++){
+        tabu_list[i] = solution;
+    }
+
+    bool igual = true;
+
+    for(int i = 0; i < 10; i++ ){
+        
+        if(solution.solucao == tabu_list[i].solucao){
+            cout<<"solução está na tabu search! "<<endl;
+        }
+        
+    }
+
+
+
+}
 
 // Imprime os resultados.
 void resultados(Instance instance)
@@ -96,7 +121,7 @@ void resultados(Instance instance)
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     // primeira melhora
-
+    /*
         //marca o início do tempo para essa instância
         auto start = std::chrono::high_resolution_clock::now();
     
@@ -125,6 +150,14 @@ void resultados(Instance instance)
 
         // Calcula o tempo decorrido
         std::chrono::duration<double> duration = end - start;
+    */
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    //tabu search
+
+        tabu_search(instance);
+
 
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
@@ -137,7 +170,7 @@ void resultados(Instance instance)
     //-1 0 8 -1 42 1 5
 
     cout << std::setprecision(15) << resultado5 << endl;
-    cout<<"tempo de execução: "<< duration.count()<<" segundos."<<endl;
+    //cout<<"tempo de execução: "<< duration.count()<<" segundos."<<endl;
     cout << endl
          << endl;
     cout << endl
@@ -178,6 +211,8 @@ int main()
         "instances/RanReal/RanReal_n480_ss_01.txt",
         "instances/RanReal/RanReal_n960_ss_01.txt",
 
+*/
+
         "instances/Geo/Geo_n010_ds_01.txt",
         "instances/Geo/Geo_n012_ds_01.txt",
         "instances/Geo/Geo_n030_ds_01.txt",
@@ -186,6 +221,8 @@ int main()
         "instances/Geo/Geo_n240_ds_01.txt",
         "instances/Geo/Geo_n480_ds_01.txt",
         "instances/Geo/Geo_n960_ds_01.txt",
+
+/*
 
         "instances/RanInt/RanInt_n010_ds_01.txt" ,
         "instances/RanInt/RanInt_n012_ds_01.txt" ,
@@ -472,9 +509,9 @@ RanReal_n960_ss_01.txt 46 080 984 23 040
         cout << endl;
         cout << "resultado encontrado pelo algoritmo: " << endl;
         resultados(instances[i]);
-        cout << "resultado da tabela: " << endl;
-        cout << resultados_artigo[i] << endl;
-        cout << endl;
+        //cout << "resultado da tabela: " << endl;
+        //cout << resultados_artigo[i] << endl;
+        //cout << endl;
     }
 
     /*
