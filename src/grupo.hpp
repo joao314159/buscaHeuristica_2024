@@ -34,4 +34,23 @@ public:
     {
         return this->elementos.size();
     }
+
+    bool operator==(const Grupo& other) const {
+        
+        bool resultado = true;
+
+        if(this->elementos.size() != other.elementos.size()){
+            resultado = false;
+        }
+        else{
+            for(int i = 0;i<this->elementos.size(); i++){
+                if(this->elementos[i]!=other.elementos.size()){
+                    resultado=false;
+                }
+            }
+        }
+        
+        return resultado;
+    }
+
 };
