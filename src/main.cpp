@@ -64,39 +64,39 @@ void resultados(Instance instance)
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     // melhor melhora
+    /*
+        int i = solution.get_melhor_melhora();
 
-    int i = solution.get_melhor_melhora();
+        Solution solution2 = solution;
 
-    Solution solution2 = solution;
-
-    while (i != -1)
-    {
-        cout << "índice: " << i << endl;
-
-        if (i != -1)
+        while (i != -1)
         {
-            solution2 = solution2.vizinhos[i];
+            cout << "índice: " << i << endl;
 
-            // remove o ponteiro para a solução anterior, para evitar consumo de memória
-            solution2.vizinhos.erase(solution2.vizinhos.begin());
+            if (i != -1)
+            {
+                solution2 = solution2.vizinhos[i];
 
-            i = solution2.get_melhor_melhora();
+                // remove o ponteiro para a solução anterior, para evitar consumo de memória
+                solution2.vizinhos.erase(solution2.vizinhos.begin());
+
+                i = solution2.get_melhor_melhora();
+            }
+            else
+            {
+                cout << "a solução atual é a melhor. " << endl;
+            }
         }
-        else
-        {
-            cout << "a solução atual é a melhor. " << endl;
-        }
-    }
 
-    resultado5 = funcoes.get_total(solution2.solucao, instance.arr_Pair);
-
+        resultado5 = funcoes.get_total(solution2.solucao, instance.arr_Pair);
+    */
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     // primeira melhora
 
-    /*
-        int index = solution.get_primeira_melhora();
+    
+        int index = solution.get_primeira_melhora2();
         Solution solution2 = solution;
 
 
@@ -109,14 +109,14 @@ void resultados(Instance instance)
             //remove o ponteiro para a solução anterior, para evitar consumo de memória
             solution2.vizinhos.erase(solution2.vizinhos.begin());
 
-            index = solution2.get_primeira_melhora();
+            index = solution2.get_primeira_melhora2();
 
         }
 
 
         resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
 
-    */
+    
 
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
