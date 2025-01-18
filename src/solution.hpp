@@ -63,6 +63,7 @@ public:
 
         return grupos;
     }
+    
 
     vector<Grupo> calcular_resultado()
     {
