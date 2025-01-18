@@ -39,12 +39,16 @@ public:
         
         bool resultado = true;
 
+        if(&other == NULL){
+            resultado = false;
+        }
+
         if(this->elementos.size() != other.elementos.size()){
             resultado = false;
         }
         else{
             for(int i = 0;i<this->elementos.size(); i++){
-                if(this->elementos[i]!=other.elementos.size()){
+                if(this->elementos[i] != other.elementos[i]){
                     resultado=false;
                 }
             }
