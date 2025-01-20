@@ -523,13 +523,57 @@ public:
     //troca os últimos elementos
     void trocaElementos2(Grupo &grupo1, Grupo &grupo2)
     {   
-        int auxiliar = grupo1.elementos[grupo1.elementos.size()-1];
         
-        grupo1.elementos.pop_back();
-        grupo1.elementos.push_back(grupo2.elementos[grupo2.elementos.size()-1]);
+            int auxiliar = grupo1.elementos[grupo1.elementos.size()-1];
+            
+            grupo1.elementos.pop_back();
+            grupo1.elementos.push_back(grupo2.elementos[grupo2.elementos.size()-1]);
 
-        grupo2.elementos.pop_back();
-        grupo2.elementos.push_back(auxiliar);
+            grupo2.elementos.pop_back();
+            grupo2.elementos.push_back(auxiliar);
+        
+        /*
+
+            int index1;
+            int index2;
+
+            int tamanho1 =  grupo1.elementos.size();
+            int tamanho2 =  grupo2.elementos.size();        
+            
+            
+            int a1 = (tamanho1);
+            int a2 = grupo1.elementos[tamanho1];
+            
+            a2*=100;        
+
+            index1 = a2%a1;
+
+            if(index1 != 0){
+                index1--;
+            }
+
+            a1 = (tamanho2);
+            a2 = grupo1.elementos[tamanho2];
+
+            a2*=100;
+
+            index2 = a2%a1;
+
+            if(index2 != 0){
+                index2--;
+            }
+
+            int auxiliar = grupo1.elementos[index1];
+            
+            grupo1.elementos.erase(grupo1.elementos.begin() + index1);
+            grupo1.elementos.push_back(grupo2.elementos[index2]);
+
+            grupo2.elementos.erase(grupo2.elementos.begin() + index2);
+            grupo2.elementos.push_back(auxiliar);            
+
+        */
+
+        
 
     }
     
