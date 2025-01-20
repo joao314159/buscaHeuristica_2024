@@ -75,19 +75,20 @@ bool is_in_tabu_list(const Lista_tabu& lista_tabu ,const Solution& solution){
     return resultado;
 }
 
+//se alternarmos trocaElementos para troca Elementos2 executamos a segunda vizinhança
 Solution tabu_search(Instance instance){
 
     Funcoes funcoes;
     Solution solution(instance);
 
-    vector<Grupo> grupos = solution.calcular_resultado5();
+    vector<Grupo> grupos = solution.calcular_resultado5(); 
 
 
     Solution melhor_atual_total = solution;
     double resultado_melhor_solucao_atual_total = funcoes.get_total(solution.solucao,instance.arr_Pair);
     double auxiliar = 0;
 
-    Lista_tabu lista_tabu(30);
+    Lista_tabu lista_tabu(20);
     
     
 
@@ -98,7 +99,7 @@ Solution tabu_search(Instance instance){
 
 
 
-    for(int i=0;i<20;i++){
+    for(int i=0;i<13;i++){
 
             //para guardar a melhor solução até o momento
             auxiliar = funcoes.get_total(solution.solucao,instance.arr_Pair);
@@ -201,16 +202,16 @@ void resultados(Instance instance)
     Funcoes funcoes;
     Solution solution(instance);
 
-    // vector<Grupo> grupos1 = solution.calcular_resultado();
-    // vector<Grupo> grupos3 = solution.calcular_resultado2();
-    // vector<Grupo> grupos2 = solution.calcular_resultado3();
-    // vector<Grupo> grupos4 = solution.calcular_resultado4();
+    //vector<Grupo> grupos1 = solution.calcular_resultado();
+    //vector<Grupo> grupos3 = solution.calcular_resultado2();
+    //vector<Grupo> grupos2 = solution.calcular_resultado3();
+    //vector<Grupo> grupos4 = solution.calcular_resultado4();
     vector<Grupo> grupos5 = solution.calcular_resultado5();
 
-    // double resultado1 = funcoes.get_total(grupos1, instance.arr_Pair);
-    // double resultado2 = funcoes.get_total(grupos2, instance.arr_Pair);
-    // double resultado3 = funcoes.get_total(grupos3, instance.arr_Pair);
-    // double resultado4 = funcoes.get_total(grupos4, instance.arr_Pair);
+    //double resultado1 = funcoes.get_total(grupos1, instance.arr_Pair);
+    //double resultado2 = funcoes.get_total(grupos2, instance.arr_Pair);
+    //double resultado3 = funcoes.get_total(grupos3, instance.arr_Pair);
+    //double resultado4 = funcoes.get_total(grupos4, instance.arr_Pair);
     double resultado5 = funcoes.get_total(grupos5, instance.arr_Pair);
 
     /*
@@ -231,10 +232,12 @@ void resultados(Instance instance)
         */
 
     cout << "resultado antes da busca local: " << endl;
-    cout << std::setprecision(15) << resultado5 << endl;
+    cout <<resultado5 << endl;
 
     cout << "trocando elementos de dois grupos: " << endl;
     cout << "resultado: " << endl;
+
+    
 
     // funcoes.trocaElementos(solution.solucao[0], solution.solucao[1],0,0);
     // resultado5 = funcoes.get_total(solution.solucao, instance.arr_Pair);
@@ -243,7 +246,13 @@ void resultados(Instance instance)
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     // melhor melhora
+
+    //melhor melhora 1 primeira vizinhança
+    //melhor melhora 2 segunda vizinhança
     /*
+        //marca o início do tempo para essa instância
+        auto start = std::chrono::high_resolution_clock::now();
+
         int i = solution.get_melhor_melhora();
 
         Solution solution2 = solution;
@@ -267,17 +276,30 @@ void resultados(Instance instance)
             }
         }
 
+        //marca o final do tempo para essa instância
+        auto end = std::chrono::high_resolution_clock::now();
+
         resultado5 = funcoes.get_total(solution2.solucao, instance.arr_Pair);
+
+        // Calcula o tempo decorrido
+        std::chrono::duration<double> duration = end - start;
+
     */
+    
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     // primeira melhora
-    /*
+
+    
+
+    //primeira melhora 1 para primeira vizih=nhança
+    //primeira melhora 2 para segunda vizinhança
+    
         //marca o início do tempo para essa instância
         auto start = std::chrono::high_resolution_clock::now();
     
-        int index = solution.get_primeira_melhora2();
+        int index = solution.get_primeira_melhora();
         Solution solution2 = solution;
 
 
@@ -290,24 +312,28 @@ void resultados(Instance instance)
             //remove o ponteiro para a solução anterior, para evitar consumo de memória
             solution2.vizinhos.erase(solution2.vizinhos.begin());
 
-            index = solution2.get_primeira_melhora2();
+            index = solution2.get_primeira_melhora();
 
         }
-
-
-        resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
+        
 
         //marca o final do tempo para essa instância
         auto end = std::chrono::high_resolution_clock::now();
 
+        resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
+
         // Calcula o tempo decorrido
         std::chrono::duration<double> duration = end - start;
-    */
+
+
+    
+    
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     //tabu search
-
+    
+    /*
         //marca o início do tempo para essa instância
         auto start = std::chrono::high_resolution_clock::now();
 
@@ -321,7 +347,11 @@ void resultados(Instance instance)
 
         resultado5 = funcoes.get_total(solucao3.solucao,instance.arr_Pair);
 
+        for(int i = 0;i<solucao3.solucao.size();i++){        
+            solucao3.solucao[i].teste();        
+        }
 
+    */
 
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
@@ -346,14 +376,15 @@ int main()
     setlocale(LC_ALL, "Portuguese");
 
     vector<string> fileNames = {
-        "instances/Geo/Geo_n010_ss_01.txt",
+       
+       /*"instances/Geo/Geo_n010_ss_01.txt",
         "instances/Geo/Geo_n012_ss_01.txt",
         "instances/Geo/Geo_n030_ss_01.txt",
         "instances/Geo/Geo_n060_ss_01.txt",
         "instances/Geo/Geo_n120_ss_01.txt",
         "instances/Geo/Geo_n240_ss_01.txt",
         "instances/Geo/Geo_n480_ss_01.txt",
-
+*/
         /*
         "instances/Geo/Geo_n960_ss_01.txt",
 
@@ -376,7 +407,7 @@ int main()
         "instances/RanReal/RanReal_n960_ss_01.txt",
 
 */
-
+/*
         "instances/Geo/Geo_n010_ds_01.txt",
         "instances/Geo/Geo_n012_ds_01.txt",
         "instances/Geo/Geo_n030_ds_01.txt",
@@ -384,9 +415,33 @@ int main()
         "instances/Geo/Geo_n120_ds_01.txt",
         "instances/Geo/Geo_n240_ds_01.txt",
         "instances/Geo/Geo_n480_ds_01.txt",
+        */
+       "instances/RanInt/RanInt_n120_ds_01.txt",
+       "instances/RanInt/RanInt_n120_ds_02.txt",
+       "instances/RanInt/RanInt_n120_ds_03.txt",
+       "instances/RanInt/RanInt_n120_ds_04.txt",
+       "instances/RanInt/RanInt_n120_ds_05.txt",
+       "instances/RanInt/RanInt_n120_ds_06.txt",
+       "instances/RanInt/RanInt_n120_ds_07.txt",
+       "instances/RanInt/RanInt_n120_ds_08.txt",
+       "instances/RanInt/RanInt_n120_ds_09.txt",
+       "instances/RanInt/RanInt_n120_ds_10.txt",
+       
+       "instances/RanInt/RanInt_n240_ds_01.txt", 
+       "instances/RanInt/RanInt_n240_ds_02.txt", 
+       "instances/RanInt/RanInt_n240_ds_03.txt", 
+       "instances/RanInt/RanInt_n240_ds_04.txt", 
+       "instances/RanInt/RanInt_n240_ds_05.txt",
+       "instances/RanInt/RanInt_n240_ds_06.txt", 
+       "instances/RanInt/RanInt_n240_ds_07.txt", 
+       "instances/RanInt/RanInt_n240_ds_08.txt", 
+       "instances/RanInt/RanInt_n240_ds_09.txt", 
+       "instances/RanInt/RanInt_n240_ds_10.txt" 
+
+        /*
         "instances/Geo/Geo_n960_ds_01.txt",
 
-/*
+
 
         "instances/RanInt/RanInt_n010_ds_01.txt" ,
         "instances/RanInt/RanInt_n012_ds_01.txt" ,
@@ -407,6 +462,7 @@ int main()
         "instances/RanReal/RanReal_n960_ds_01.txt"
 
         */
+
     };
 
     vector<string> resultados_artigo{
