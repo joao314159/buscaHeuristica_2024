@@ -18,6 +18,16 @@ public:
 
     vector<int> pontos = {};
 
+    void teste(){
+        double tamanho1 = (double)this->tam_minimo;
+        double tamanho2 = (double)this->tam_maximo;
+        if(elementos.size() < tamanho1 || elementos.size()>tamanho2){
+            cout<<endl<<endl;
+            cout<<"Erro! A quantidade de elementos é "<<elementos.size()<<" e o tamanho máximo é "<<this->tam_maximo<<" e o tamanho mínimo é "<<this->tam_minimo<<endl;
+            cout<<endl<<endl;
+        }
+    }
+
     void imprimir()
     {
         cout << "tamanho mínimo: " << tam_minimo << endl;
