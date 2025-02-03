@@ -9,6 +9,7 @@
 #include "lista_elementos.hpp"
 #include "funcoes.hpp"
 
+
 using namespace std;
 class Solution
 {
@@ -62,6 +63,65 @@ public:
         }
 
         return grupos;
+    }
+
+    Solution random(){
+
+        Solution solution1(this->instance);
+
+        //para gerar sempre números diferentes
+        unsigned seed = time(0);
+        srand(seed);
+
+        //gera distribuição aleatória
+
+        Funcoes funcoes;
+        vector<int> elementos;
+        vector<Grupo> grupos;
+
+        elementos = funcoes.get_elementos(instance.arr_Pair);
+        grupos = funcoes.get_grupos(instance);
+
+        while (elementos.size() > 0)
+        {
+            for (int i = 0; i < instance.quant_Grup; i++)
+            {
+                if (grupos[i].elementos.size() < grupos[i].tam_minimo)
+                {   
+                    //gera um número aleatório entre os elementos
+                    int index = rand();
+                    int tamanho = elementos.size();
+                    index = index%tamanho;
+
+                    grupos[i].elementos.push_back(elementos[index]);
+                    elementos.pop_back();
+
+                }
+            }
+            for (int i = 0; i < instance.quant_Grup; i++)
+            {
+                if (elementos.size() == 0)
+                {
+                    break;
+                }
+                if (grupos[i].elementos.size() < grupos[i].tam_maximo)
+                {   
+                    //gera um número aleatório entre os elementos
+                    int index = rand();
+                    int tamanho = elementos.size();
+                    index = index%tamanho;
+
+                    grupos[i].elementos.push_back(elementos[index]);
+                    elementos.pop_back();
+                }
+            }
+        }
+
+        solution1.solucao  = grupos;
+        solution1.instance = this->instance;
+
+        return solution1;
+        
     }
     
 
