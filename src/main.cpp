@@ -308,6 +308,7 @@ void resultados(Instance instance)
             cout<<"índice: "<<index<<endl;
 
             solution2 = solution2.vizinhos[index];
+            
 
             //remove o ponteiro para a solução anterior, para evitar consumo de memória
             solution2.vizinhos.erase(solution2.vizinhos.begin());
@@ -371,9 +372,9 @@ void resultados(Instance instance)
          << endl;
 }
 
-int main()
-{
-    setlocale(LC_ALL, "Portuguese");
+void teste1(){
+
+     setlocale(LC_ALL, "Portuguese");
 
     vector<string> fileNames = {
        
@@ -728,7 +729,15 @@ RanReal_n960_ss_01.txt 46 080 984 23 040
         cout << fileNames[i] << endl;
         cout << endl;
         cout << "resultado encontrado pelo algoritmo: " << endl;
+        
+        
         resultados(instances[i]);
+        
+        //int a = rand();
+        //a = a%9;
+        //cout<<"NÚMERO ALEATÓRIO: "<<a<<endl<<endl;
+        
+
         //cout << "resultado da tabela: " << endl;
         //cout << resultados_artigo[i] << endl;
         //cout << endl;
@@ -753,5 +762,32 @@ RanReal_n960_ss_01.txt 46 080 984 23 040
      }
 
  */
-    return 0;
+
+}
+
+void teste2(){
+
+    //gerando soluções aleatórias
+    Instance instance;
+    instance.read_File("instances/Geo/Geo_n010_ds_01.txt");
+    Solution solucoes[10];
+    double resultados[10];
+
+    Funcoes funcoes;
+
+    solucoes[0] = Solution(instance);
+    for(int i =0; i<10;i++){
+        solucoes[i] = solucoes[0].random();  
+        resultados[i] = funcoes.get_total(solucoes[i].solucao,solucoes[i].instance.arr_Pair);    
+        cout<<"resultado "<<i<<" :"<<resultados[i]<<endl<<endl;   
+    }
+
+    
+}
+
+
+int main()
+{
+   teste2();
+   return 0;
 }
