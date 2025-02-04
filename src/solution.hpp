@@ -9,6 +9,8 @@
 #include "lista_elementos.hpp"
 #include "funcoes.hpp"
 
+#include <chrono>
+#include <ctime>
 
 using namespace std;
 class Solution
@@ -70,7 +72,7 @@ public:
         Solution solution1(this->instance);
 
         //para gerar sempre números diferentes
-        unsigned seed = time(0);
+        unsigned seed = time(0) + clock()*10;
         srand(seed);
 
         //gera distribuição aleatória
