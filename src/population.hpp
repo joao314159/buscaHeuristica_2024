@@ -7,6 +7,8 @@
 
 class Population{
 
+    public:
+
     vector<Solution> solutions;
 
     Solution melhor; 
