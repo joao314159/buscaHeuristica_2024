@@ -2,7 +2,9 @@
 
 #include <iostream>
 #include <algorithm>
+#include <ctime>
 #include "solution.hpp"
+#include "funcoes.hpp"
 
 
 class Population{
@@ -12,17 +14,16 @@ class Population{
     vector<Solution> solutions;
 
     Solution melhor; 
+
+    int tamanho_maximo;
              
     
     Population(){
         cout<<"TESTE"<<endl<<endl;
     }
 
-    Solution Gerar_filho(int index1, int index2){
-
-        Solution solution1 = this->solutions[index1];
-        Solution solution2 = this->solutions[index2];
-
+    Solution Gerar_filho(Solution solution1, Solution solution2){
+      
         Instance instance = solution1.instance;
 
         Solution solution3(instance);
@@ -38,11 +39,72 @@ class Population{
 
     }
 
-    void Criar_mutacao(int index){
+    void Criar_mutacao(int index, int intensidade){
 
     }
 
-    Solution seleciona_e_gera_filho(){
+    //todas as soluções passando o tamanho máximo são as soluções 
+    //que foram geradas pela última execução dessa função
+    void seleciona_e_gera_filhos(){
+
+        //no vector chances o valor na posição i+1 corresponde à soma 
+        //do valor na posição i com o potencial da solução i+1 ser escolhida     
+        vector<double> chances;
+        
+        
+        vector<double> resultados;
+
+        //para guardar as soluções que já geraram filhos
+        vector<bool> usadas;
+
+        Funcoes funcoes;
+
+        double total = 0;
+        double menor;
+        double media;
+        double base;
+        int tamanho = solutions.size();
+
+        menor = funcoes.get_total(solutions[0],solutions[0].instance.arr_Pair);
+
+        for(int i=0; i <tamanho ;i++){
+
+            usadas.push_back(false);
+
+            double a;
+            a = funcoes.get_total(solutions[i],solutions[i].instance.arr_Pair);
+            resultados.push_back(a);
+
+            if(a < menor){
+                menor = a;
+            }
+
+            total+=a;
+        }
+
+        media = total/(double)tamanho;
+        
+        //para comparar os resultados e sortear os que vão gerar filhos
+        base = menor - (media-menor) - 1;
+
+        double a1 = resultados[0]-base; 
+        chances.push_back(a1);
+
+        for(int i = 1;i < tamanho; i++){
+            double a = resultados[i]-base;
+            a +=chances[i-1];
+            chances.push_back(a);
+        }
+
+        //agora o vector chances tem as probabilidades para cada solução
+
+        //selecionamos as que vão gerar filhos
+        
+        unsigned seed = time(0);
+        srand(seed);
+        double maior = chances[tamanho-1];
+
+        
 
 
     }
