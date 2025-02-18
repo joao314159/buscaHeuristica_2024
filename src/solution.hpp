@@ -66,7 +66,7 @@ public:
 
         return grupos;
     }
-
+//concertar
     Solution random(){
 
         Solution solution1(this->instance);
@@ -96,7 +96,9 @@ public:
                     index = index%tamanho;
 
                     grupos[i].elementos.push_back(elementos[index]);
-                    elementos.pop_back();
+
+
+                    elementos.erase(elementos.begin() +index);
 
                 }
             }
@@ -1093,6 +1095,18 @@ public:
         this->vizinhos.push_back(vizinho_melhor);
 
         return index;
+    }
+
+
+
+
+    void imprimir(){
+        int tamanho = this->solucao.size();
+
+        for(int i = 0; i< tamanho;i++){
+            solucao[i].imprimir();
+            cout<<endl<<endl;
+        }
     }
 
 };
