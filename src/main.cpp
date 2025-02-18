@@ -8,6 +8,7 @@
 #include "instance.hpp"
 #include "pair.hpp"
 #include "solution.hpp"
+#include "population.hpp"
 
 
 using namespace std;
@@ -781,6 +782,10 @@ void teste2(){
         resultados[i] = funcoes.get_total(solucoes[i].solucao,solucoes[i].instance.arr_Pair);    
         cout<<"resultado "<<i<<" :"<<resultados[i]<<endl<<endl;   
     }
+
+    cout<<"teste"<<endl<<endl;
+
+    Population population(true, instance);
 
     
 }
