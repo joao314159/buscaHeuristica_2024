@@ -24,13 +24,13 @@ class Population{
 
         if(inicializar){
             for(int i = 0;i<20;i++){
-                cout<<"solução adicionada"<<endl;
+                cout<<"solução " <<i<<" adicionada"<<endl;
                 Solution solution(instance);                
-                cout<<"a"<<endl;
+                
                 solution = solution.random();
-                cout<<"a"<<endl;
+                
                 this->solutions.push_back(solution);
-                cout<<"solução adicionada"<<endl;
+                
             }
         }    
 
