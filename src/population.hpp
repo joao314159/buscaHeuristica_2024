@@ -65,14 +65,14 @@ class Population{
         double base;
         int tamanho = solutions.size();
 
-        menor = funcoes.get_total(solutions[0],solutions[0].instance.arr_Pair);
+        menor = funcoes.get_total(this->solutions[0].solucao,solutions[0].instance.arr_Pair);
 
         for(int i=0; i <tamanho ;i++){
 
             usadas.push_back(false);
 
             double a;
-            a = funcoes.get_total(solutions[i],solutions[i].instance.arr_Pair);
+            a = funcoes.get_total(this->solutions[i].solucao,solutions[i].instance.arr_Pair);
             resultados.push_back(a);
 
             if(a < menor){
@@ -102,9 +102,17 @@ class Population{
         
         unsigned seed = time(0);
         srand(seed);
-        double maior = chances[tamanho-1];
+        int maior = chances[tamanho-1];
 
+        double sorteio = rand()%maior +1;
         
+        int index;
+        //fazer para todos os pais
+        for(int i =0;i<tamanho-1;i++){
+            if(resultados[i]<=sorteio && sorteio<= resultados[i+1]){
+                index = i;
+            }
+        }
 
 
     }
