@@ -18,24 +18,68 @@ class Population{
     int tamanho_maximo;
              
     
-    Population(){
+    Population(bool inicializar, Instance instance){
         cout<<"TESTE"<<endl<<endl;
+        solutions ={};
+
+        if(inicializar){
+            for(int i = 0;i<20;i++){
+                cout<<"solução adicionada"<<endl;
+                Solution solution(instance);                
+                cout<<"a"<<endl;
+                solution = solution.random();
+                cout<<"a"<<endl;
+                this->solutions.push_back(solution);
+                cout<<"solução adicionada"<<endl;
+            }
+        }    
+
     }
 
-    Solution Gerar_filho(Solution solution1, Solution solution2){
+    Solution Gerar_filho(Solution father, Solution mother){
       
-        Instance instance = solution1.instance;
+        Instance instance = father.instance;
 
+        //filho
         Solution solution3(instance);
+        
+        //será necessário para, após adicionados os elementos do pai no filho, não repetir
+        //quando adicionar os elementos da mãe
+        vector<bool> usados;
+
+        //por enquanto nenhum elemento foi colocado no filho
+        for(int i= 0 ;i<instance.quant_Elem;i++){
+            usados.push_back(false);
+        }
 
         
         for(int i =0; i< instance.quant_Grup;i++){
             Grupo grupo;
-            grupo.tam_minimo = solution1.solucao[i].tam_minimo;
-            grupo.tam_maximo = solution1.solucao[i].tam_maximo;
+            grupo.tam_minimo = father.solucao[i].tam_minimo;
+            grupo.tam_maximo = father.solucao[i].tam_maximo;
 
             solution3.solucao.push_back(grupo);
         }
+
+        //primeiro preenchemos 50% de cada grupo com a solução do pai
+        for(int i=0; i< instance.quant_Grup;i++){
+
+            //nunca haverá valor 0
+            int tamanho = solution3.solucao[i].elementos.size();
+            tamanho = tamanho/2 +1;
+
+            //passamos cada valor no grupo
+            for(int i2=0;i<tamanho;i2++){
+                solution3.solucao[i].elementos.push_back(father.solucao[i].elementos[i2]);
+            }
+
+
+
+        }
+
+
+
+        return solution3;
 
     }
 
@@ -104,16 +148,68 @@ class Population{
         srand(seed);
         int maior = chances[tamanho-1];
 
-        double sorteio = rand()%maior +1;
+        vector<int> fathers;
+        vector<int> mothers;
+
+        int index1;
+        int index2;
         
-        int index;
-        //fazer para todos os pais
-        for(int i =0;i<tamanho-1;i++){
-            if(resultados[i]<=sorteio && sorteio<= resultados[i+1]){
-                index = i;
+        for(int i = 0;i<10;i++){
+
+            double sorteio = rand()%maior +1;
+
+            //fazer para todos os pais e mães
+
+            //sorteamos os pais
+            for(int i2 =0;i2<tamanho-1;i2++){
+
+                double sorteio = rand()%maior +1;
+
+                if(resultados[i]<=sorteio && sorteio<= resultados[i+1]){
+                    index1 = i;
+                    break;
+                }
+              
             }
+
+            sorteio = rand()%maior +1;
+            
+            //sorteamos as mães
+            for(int i2 =0;i2<tamanho-1;i2++){
+               
+                if(resultados[i]<=sorteio && sorteio<= resultados[i+1]){
+                    index2 = i;
+                    break;
+                }
+              
+            }
+
+            fathers.push_back(index1);
+            mothers.push_back(index2);
+
+        }    
+
+        int tamanho2 = fathers.size();
+
+        //agora geramos os filhos
+        for(int i=0;i<tamanho2;i++){
+            Solution solution1 = this->solutions[fathers[i]];
+            Solution solution2 = this->solutions[mothers[i]];
+
+            Solution resultado = this->Gerar_filho(solution1,solution2);
+
+            this->solutions.push_back(resultado);
         }
 
+    }
+
+    //faz restarem apenas 20 organismos
+    void destruir(){
+
+    }
+
+    //reproduz organismos, mata organismos, gera mutações, salva melhor até o momento
+    void faz_tudo(){
 
     }
 
