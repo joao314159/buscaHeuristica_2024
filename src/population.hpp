@@ -18,12 +18,14 @@ class Population{
     int tamanho_maximo;
              
     
-    Population(bool inicializar, Instance instance){
+    Population(bool inicializar, int tamanho_maximo, Instance instance){
         cout<<"TESTE"<<endl<<endl;
         solutions ={};
 
+        this->tamanho_maximo = tamanho_maximo;
+
         if(inicializar){
-            for(int i = 0;i<20;i++){
+            for(int i = 0;i<tamanho_maximo;i++){
                 cout<<"solução " <<i<<" adicionada"<<endl;
                 Solution solution(instance);                
                 
@@ -211,6 +213,19 @@ class Population{
     //reproduz organismos, mata organismos, gera mutações, salva melhor até o momento
     void faz_tudo(){
 
+    }
+
+    void imprimir(){
+        for(int i = 0; i< this->tamanho_maximo; i++){
+
+            cout<<"solução "<<i<<endl;
+
+            for(int i2=0;i2 <this->solutions[i].solucao.size(); i2++){
+                cout<<"grupo "<<i2<<endl;
+                solutions[i].solucao[i2].imprimir();                
+            }
+            cout<<endl<<endl;
+        }
     }
 
 };
