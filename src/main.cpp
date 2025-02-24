@@ -785,9 +785,11 @@ void teste2(){
 
     cout<<"teste"<<endl<<endl;
 
-    Population population(true, instance);
-
+    Population population(true,20, instance);
     
+    population.imprimir();
+
+
 }
 
 
