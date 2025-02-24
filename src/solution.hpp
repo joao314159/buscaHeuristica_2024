@@ -90,18 +90,23 @@ public:
             {
                 if (grupos[i].elementos.size() < grupos[i].tam_minimo)
                 {   
+                    if(elementos.size()==0){break;}
                     //gera um número aleatório entre os elementos
                     int index = rand();
                     int tamanho = elementos.size();
                     index = index%tamanho;
+                    if(index==0){
+                        cout<<"TESTE"<<endl<<endl<<endl;
+                    }
 
                     grupos[i].elementos.push_back(elementos[index]);
 
-
-                    elementos.erase(elementos.begin() +index);
+                    elementos.erase(elementos.begin() + index);
+                  
 
                 }
             }
+            
             for (int i = 0; i < instance.quant_Grup; i++)
             {
                 if (elementos.size() == 0)
@@ -116,9 +121,13 @@ public:
                     index = index%tamanho;
 
                     grupos[i].elementos.push_back(elementos[index]);
-                    elementos.pop_back();
+
+                    elementos.erase(elementos.begin() + index);
+                   
+                    
                 }
             }
+            
         }
 
         solution1.solucao  = grupos;
