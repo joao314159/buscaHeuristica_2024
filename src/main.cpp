@@ -770,7 +770,7 @@ void teste2(){
 
     //gerando soluções aleatórias
     Instance instance;
-    instance.read_File("instances/Geo/Geo_n010_ds_01.txt");
+    instance.read_File("instances/Geo/Geo_n012_ds_01.txt");
     Solution solucoes[10];
     double resultados[10];
 
@@ -788,6 +788,8 @@ void teste2(){
     Population population(true,20, instance);
     
     population.imprimir();
+
+    population.seleciona_e_gera_filhos();
 
 
 }
