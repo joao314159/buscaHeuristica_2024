@@ -25,7 +25,8 @@ class Population{
         this->tamanho_maximo = tamanho_maximo;
 
         if(inicializar){
-            for(int i = 0;i<tamanho_maximo;i++){
+            //as primeiras soluções são aleatórias
+            for(int i = 0;i<tamanho_maximo-1;i++){
                 cout<<"solução " <<i<<" adicionada"<<endl;
                 Solution solution(instance);                
                 
@@ -34,6 +35,12 @@ class Population{
                 this->solutions.push_back(solution);
                 
             }
+            //a última solução segue a heurística
+            Solution solution(instance);
+
+            solution.solucao = solution.calcular_resultado5();
+
+            this->solutions.push_back(solution);
         }    
 
     }
@@ -193,14 +200,29 @@ class Population{
 
         int tamanho2 = fathers.size();
 
+        int quantidade = 0;
+
         //agora geramos os filhos
         for(int i=0;i<tamanho2;i++){
             Solution solution1 = this->solutions[fathers[i]];
             Solution solution2 = this->solutions[mothers[i]];
 
-            Solution resultado = this->Gerar_filho(solution1,solution2);
+            quantidade+=2; 
 
-            this->solutions.push_back(resultado);
+            cout<<"pai: "<<endl;
+            solution1.imprimir();
+
+            cout<<"mãe: "<<endl;
+            solution2.imprimir();
+
+            cout<<"quantidade: "<<endl;
+            cout<<quantidade<<endl;
+
+            cout<<endl<<endl;
+
+            //Solution resultado = this->Gerar_filho(solution1,solution2);
+
+            //this->solutions.push_back(resultado);
         }
 
     }
