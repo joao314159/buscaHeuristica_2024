@@ -788,6 +788,7 @@ void teste2(){
     Population population(true,20, instance);
     
     population.imprimir();
+    population.testar();
 
     population.seleciona_e_gera_filhos();
 
