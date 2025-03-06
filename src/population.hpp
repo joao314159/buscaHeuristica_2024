@@ -100,6 +100,10 @@ class Population{
     //que foram geradas pela última execução dessa função
     void seleciona_e_gera_filhos(){
 
+        
+
+
+        /*
         //no vector chances o valor na posição i+1 corresponde à soma 
         //do valor na posição i com o potencial da solução i+1 ser escolhida     
         vector<double> chances;
@@ -163,6 +167,7 @@ class Population{
         int index1;
         int index2;
         
+        /*
         for(int i = 0;i<10;i++){
 
             double sorteio = rand()%maior +1;
@@ -224,6 +229,7 @@ class Population{
 
             //this->solutions.push_back(resultado);
         }
+            */
 
     }
 
