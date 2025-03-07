@@ -100,8 +100,17 @@ class Population{
     //que foram geradas pela última execução dessa função
     void seleciona_e_gera_filhos(){
 
-        
+        //resultados para cada solução. Quanto maior, maior a chance de ser selecionada.
+        vector<double> resultados;
+        vector<double> chances;
+        int tamanho = this->solutions.size();
+        Funcoes funcoes;
 
+        for(int i = 0;i< tamanho; i++){
+            double a;
+            a = funcoes.get_total(this->solutions[i].solucao,solutions[i].instance.arr_Pair);
+            resultados.push_back(a);
+        }
 
         /*
         //no vector chances o valor na posição i+1 corresponde à soma 
