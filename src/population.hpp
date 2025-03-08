@@ -5,6 +5,7 @@
 #include <ctime>
 #include "solution.hpp"
 #include "funcoes.hpp"
+#include "algorithm"
 
 
 class Population{
@@ -95,7 +96,7 @@ class Population{
 
         //filho
         Solution solution3(instance);
-        /*
+        
         //será necessário para, após adicionados os elementos do pai no filho, não repetir
         //quando adicionar os elementos da mãe
         vector<bool> usados;
@@ -114,23 +115,92 @@ class Population{
             solution3.solucao.push_back(grupo);
         }
 
+
         //primeiro preenchemos 50% de cada grupo com a solução do pai
         for(int i=0; i< instance.quant_Grup;i++){
 
             //nunca haverá valor 0
-            int tamanho = solution3.solucao[i].elementos.size();
-            tamanho = tamanho/2 +1;
+            int tamanho = father.solucao[i].elementos.size();
+            tamanho = tamanho/3 +1;
+
+            cout<<father.solucao[i].elementos.size()<<endl;
+            cout<<tamanho<<endl;
 
             //passamos cada valor no grupo
-            for(int i2=0;i<tamanho;i2++){
+            for(int i2=0;i2<tamanho;i2++){
                 solution3.solucao[i].elementos.push_back(father.solucao[i].elementos[i2]);
+                usados[father.solucao[i].elementos[i2]] = true;
             }
-
 
 
         }
 
-*/
+        cout<<"teste filho: "<<endl;
+        solution3.imprimir();
+        cout<<"teste filho fim"<<endl;
+
+        //para percorrer os elementos
+        int i3 = 0;
+        //agora passamos os elementos restantes conforme a mãe
+        for(int i=0; i< instance.quant_Grup;i++){
+            
+            //primeiro garantimos que todos os grupos respeitem o tamanho mínimo
+            int i2 = solution3.solucao[i].elementos.size();
+            cout<<"elementos já adicionados no grupo "<<i<<endl;
+            cout<<i2<<endl<<endl;
+
+            while(i2< solution3.solucao[i].tam_minimo){
+                
+                //primeiro tentamos colocar os elementos da mãe nesse grupo
+                int i4 = -1;
+                for(int i5 = 0;i5<mother.solucao[i].elementos.size();i5++){
+                    //se algum elemento do grupo i está presente na mãe e não foi adicionado podemos adicioná-lo
+                    if(not usados[mother.solucao[i].elementos[i5]]){ 
+                        i4 = mother.solucao[i].elementos[i5];
+                    }
+                }
+                
+                //se há um elemento da mãe para ser adicionado
+                if( i4 != -1){
+                    usados[i4] = true;
+                    solution3.solucao[i].elementos.push_back(i4);
+                    i2++;
+                    continue;
+                }
+
+
+                if(not usados[i3]){
+                    cout<< "elemento adicionado"<<endl<<endl;
+                    solution3.solucao[i].elementos.push_back(i3);
+                    i2++;
+                    usados[i3] = true;
+                }
+                
+                i3++;
+                
+            }           
+              
+        }    
+
+        i3 = 0;
+        //agora que já preenchemos o tamanho mínimo, adicionamos os elementos restantes
+        for(int i=0; i< instance.quant_Grup;i++){
+
+            while(solution3.solucao[i].elementos.size() < solution3.solucao[i].tam_maximo && i3 != instance.quant_Elem){
+                if(not usados[i3]){
+                    solution3.solucao[i].elementos.push_back(i3);
+                    usados[i3] =true;
+                }  
+                i3++;  
+            }
+        }
+
+        cout<<"teste 2 filho: "<<endl;
+        solution3.imprimir();
+        cout<<"teste 2 filho fim"<<endl;
+
+
+        
 
         return solution3;
 
@@ -150,7 +220,6 @@ class Population{
         double media = 0;
         int tamanho = this->solutions.size();
         Funcoes funcoes;
-
 
 
         for(int i3=0;i3<10;i3++){
@@ -375,6 +444,15 @@ class Population{
 
     //faz restarem apenas 20 organismos
     void destruir(){
+
+        vector<double> resultados;
+        Funcoes funcoes;
+
+        int total = this->solutions.size();
+        for(int i=0;i<total;i++){
+            double resultado = funcoes.get_total(solutions[i].solucao,this->instance.arr_Pair);
+            resultados.push_back(resultado);
+        }
 
     }
 
