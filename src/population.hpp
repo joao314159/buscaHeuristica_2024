@@ -44,6 +44,8 @@ class Population{
 
         
 
+        
+
         if(inicializar){
             //as primeiras soluções são aleatórias
             for(int i = 0;i<tamanho_maximo-1;i++){
@@ -62,6 +64,8 @@ class Population{
 
             this->solutions.push_back(solution);
         }  
+
+        this->melhor = solutions[0];
         
         //para usar a função rand() depois
         unsigned seed = time(0) * (solutions[0].solucao[0].elementos[0] + 2 + (10/time(0)));
@@ -480,12 +484,18 @@ class Population{
 
         //antes da destruição, salvamos o melhor até o momento
         Resultado_com_indice last = resultados.back();
-        this->melhor = this->solutions[last.indice];
+
+        double anterior = funcoes.get_total(this->melhor.solucao,instance.arr_Pair);
+        double melhor2 = funcoes.get_total(this->solutions[last.indice].solucao,instance.arr_Pair); 
+
+        if(melhor2 > anterior){
+            this->melhor = this->solutions[last.indice];
+        }
+            
 
         cout<<"melhor até o momento: "<<endl;
 
-        double melhor2 = funcoes.get_total(this->melhor.solucao,instance.arr_Pair); 
-
+        
         cout<<melhor2<<endl;
 
         //agora destruímos 10 soluções
@@ -510,6 +520,8 @@ class Population{
 
     //reproduz organismos, mata organismos, gera mutações, salva melhor até o momento
     void faz_tudo(){
+        this->seleciona_e_gera_filhos();
+        this->destruir();
 
     }
 

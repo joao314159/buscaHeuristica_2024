@@ -790,10 +790,16 @@ void teste2(){
     population.imprimir();
     population.testar();
 
-    population.seleciona_e_gera_filhos();
+    for(int i=0;i<5;i++){
+        population.faz_tudo();
+    }    
 
-    population.destruir();
+    cout<<endl<<endl;
 
+    //testando resultado
+    double resultado2 = funcoes.get_total(population.melhor.solucao,population.instance.arr_Pair);
+    population.melhor.imprimir();
+    cout<<resultado2<<endl;
 
 }
 
