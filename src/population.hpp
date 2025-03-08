@@ -488,6 +488,24 @@ class Population{
 
         cout<<melhor2<<endl;
 
+        //agora destruímos 10 soluções
+        for(int i = 0;i<10;i++){
+            this->solutions[resultados[i].indice].resultado = -1;
+        }
+        int i = 0;
+        while(this->solutions.size()>20) {
+            if(this->solutions[i].resultado == -1){
+                this->solutions.erase(this->solutions.begin() + i);
+
+            }
+            else{
+                i++;
+            }
+        }
+
+        cout<<this->solutions.size()<<endl;
+
+
     }
 
     //reproduz organismos, mata organismos, gera mutações, salva melhor até o momento
