@@ -85,13 +85,13 @@ class Population{
         return i2;
     }
 
-    Solution Gerar_filho(Solution father, Solution mother){
+    Solution gerar_filho(Solution father, Solution mother){
       
         Instance instance = father.instance;
 
         //filho
         Solution solution3(instance);
-        
+        /*
         //será necessário para, após adicionados os elementos do pai no filho, não repetir
         //quando adicionar os elementos da mãe
         vector<bool> usados;
@@ -126,13 +126,13 @@ class Population{
 
         }
 
-
+*/
 
         return solution3;
 
     }
 
-    void Criar_mutacao(int index, int intensidade){
+    void criar_mutacao(int index, int intensidade){
 
     }
 
@@ -223,7 +223,11 @@ class Population{
 
         Solution pai = this->solutions[sorteado1];
         Solution mae = this->solutions[sorteado2];
+        
+        Solution filho = this->gerar_filho(pai,mae);
+        this->solutions.push_back(filho);
 
+        
         /*
         //no vector chances o valor na posição i+1 corresponde à soma 
         //do valor na posição i com o potencial da solução i+1 ser escolhida     
