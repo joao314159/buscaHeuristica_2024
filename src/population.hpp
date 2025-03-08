@@ -208,6 +208,11 @@ class Population{
             int sorteado1 = this->sorteador(chances,20);
             int sorteado2 = this->sorteador(chances,20);
 
+            cout<<"índice do pai: "<<endl;
+            cout<<sorteado1<<endl;
+            cout<<"Índice da mãe: "<<endl;
+            cout<<sorteado2<<endl;
+
             //testando
             double maior_chance = 0;
             for(int i = 0;i<tamanho;i++){
@@ -233,6 +238,10 @@ class Population{
             this->solutions.push_back(filho);
 
         }
+
+        cout<<"total de filhos: "<<endl;
+        cout<<this->solutions.size();
+        //próximo passo: destruir 10 filhos
             
         /*
         //no vector chances o valor na posição i+1 corresponde à soma 
