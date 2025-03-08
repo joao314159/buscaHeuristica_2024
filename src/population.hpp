@@ -200,8 +200,8 @@ class Population{
         //agora a partir das chances de cada solução, sorteamos soluções para serem pais e mães de novas soluções
         //depois teremos que DESTRUIR soluções antigas, para que restem sempre 20.
         //Mas isso será feito pela função destruir.
-        int sorteado = this->sorteador(chances,20);
-
+        int sorteado1 = this->sorteador(chances,20);
+        int sorteado2 = this->sorteador(chances,20);
 
         //testando
         double maior_chance = 0;
@@ -216,10 +216,13 @@ class Population{
         }
 
         cout<<"sorteado: "<<endl;
-        cout<<chances[sorteado]<<endl;
+        cout<<chances[sorteado1]<<endl;
         cout<<"maior chance: "<<endl;
         cout<<maior_chance<<endl;
         cout<<endl<<endl;
+
+        Solution pai = this->solutions[sorteado1];
+        Solution mae = this->solutions[sorteado2];
 
         /*
         //no vector chances o valor na posição i+1 corresponde à soma 
