@@ -792,6 +792,8 @@ void teste2(){
 
     population.seleciona_e_gera_filhos();
 
+    population.destruir();
+
 
 }
 

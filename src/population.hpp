@@ -8,6 +8,19 @@
 #include "algorithm"
 
 
+class Resultado_com_indice{
+
+public:
+
+    int indice;
+    double resultado;
+
+    bool operator<(const Resultado_com_indice& resultado2) const{
+        return this->resultado < resultado2.resultado;        
+    }
+
+};
+
 class Population{
 
     public:
@@ -442,17 +455,38 @@ class Population{
 
     }
 
-    //faz restarem apenas 20 organismos
+    //faz restarem apenas 20 organismos (salva o melhor também)
     void destruir(){
 
-        vector<double> resultados;
+        vector<Resultado_com_indice> resultados;
         Funcoes funcoes;
 
         int total = this->solutions.size();
         for(int i=0;i<total;i++){
             double resultado = funcoes.get_total(solutions[i].solucao,this->instance.arr_Pair);
-            resultados.push_back(resultado);
+            
+            Resultado_com_indice resultado1;
+            resultado1.resultado=resultado;
+            resultado1.indice = i;
+
+            resultados.push_back(resultado1); 
         }
+
+        sort(resultados.begin(),resultados.end());
+        cout<<"resultados ordenados: "<<endl;
+        for(int i = 0;i < resultados.size();i++){
+            cout<<resultados[i].resultado<<endl;
+        }
+
+        //antes da destruição, salvamos o melhor até o momento
+        Resultado_com_indice last = resultados.back();
+        this->melhor = this->solutions[last.indice];
+
+        cout<<"melhor até o momento: "<<endl;
+
+        double melhor2 = funcoes.get_total(this->melhor.solucao,instance.arr_Pair); 
+
+        cout<<melhor2<<endl;
 
     }
 
