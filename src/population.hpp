@@ -28,6 +28,8 @@ class Population{
 
         this->instance = instance;
 
+        
+
         if(inicializar){
             //as primeiras soluções são aleatórias
             for(int i = 0;i<tamanho_maximo-1;i++){
@@ -45,16 +47,18 @@ class Population{
             solution.solucao = solution.calcular_resultado5();
 
             this->solutions.push_back(solution);
-        }    
+        }  
+        
+        //para usar a função rand() depois
+        unsigned seed = time(0) * (solutions[0].solucao[0].elementos[0] + 2 + (10/time(0)));
+        srand(seed);
 
     }
 
    
     int sorteador(vector<double>& lista, int tamanho){
     
-        unsigned seed = time(0) * (lista[0]/ lista[tamanho-1]);
-        srand(seed);
-        
+                
         int i2 =0;
         
         double total = 0;
@@ -147,87 +151,89 @@ class Population{
         int tamanho = this->solutions.size();
         Funcoes funcoes;
 
-        for(int i = 0;i< tamanho; i++){
-            double a;
-            a = funcoes.get_total(this->solutions[i].solucao,solutions[i].instance.arr_Pair);
-            resultados.push_back(a);
-        }
 
 
+        for(int i3=0;i3<10;i3++){
+
+            cout<<endl;
+
+            cout<<"gerando filho "<<i3<<endl<<endl;
 
 
-
-
-
-
-
-        //gerar valores para cada solução baseado em seu resultado, para serem usados no sorteio dos pais e filhos.
-        //quando sortear um pai. descartá-lo antes de sortear a mãe. Uma solução não pode ser pai e mãe.
-        
-        //primeiro calculamos a média dos resultados e o menor valor entre os resultados
-        
-        double menor = resultados[0];
-
-        for(int i = 0;i< tamanho; i++)
-        {
-            //salvamos o menor valor
-            if(resultados[i]< menor){
-                menor = resultados[i];
+            for(int i = 0;i< tamanho; i++){
+                double a;
+                a = funcoes.get_total(this->solutions[i].solucao,solutions[i].instance.arr_Pair);
+                resultados.push_back(a);
             }
 
-            //calculamos a media
-            media+=resultados[i];
-        }
+            //gerar valores para cada solução baseado em seu resultado, para serem usados no sorteio dos pais e filhos.
+            //quando sortear um pai. descartá-lo antes de sortear a mãe. Uma solução não pode ser pai e mãe.
+            
+            //primeiro calculamos a média dos resultados e o menor valor entre os resultados
+            
+            double menor = resultados[0];
 
-        media = media/tamanho;
+            for(int i = 0;i< tamanho; i++)
+            {
+                //salvamos o menor valor
+                if(resultados[i]< menor){
+                    menor = resultados[i];
+                }
 
-        for(int i =0;i<tamanho;i++){
-            double a;
-            a = resultados[i] - menor +100;
-            a = a*a;
-            chances.push_back(a);
-        }
-
-        //testando os resultados
-        for(int i=0;i<tamanho;i++){
-            cout<<"resultado para a solução "<<i<<endl;
-            cout<<resultados[i]<<endl;
-            cout<<"chance da solução "<<i<<" ser sorteada: "<<endl;
-            cout<<chances[i]<<endl;
-        }
-        cout<<endl<<endl;
-
-        //agora a partir das chances de cada solução, sorteamos soluções para serem pais e mães de novas soluções
-        //depois teremos que DESTRUIR soluções antigas, para que restem sempre 20.
-        //Mas isso será feito pela função destruir.
-        int sorteado1 = this->sorteador(chances,20);
-        int sorteado2 = this->sorteador(chances,20);
-
-        //testando
-        double maior_chance = 0;
-        for(int i = 0;i<tamanho;i++){
-
-            cout<<"chances "<<i<<endl;
-            cout<<chances[i]<<endl;
-
-            if(chances[i]>maior_chance){
-                maior_chance = chances[i];
+                //calculamos a media
+                media+=resultados[i];
             }
+
+            media = media/tamanho;
+
+            for(int i =0;i<tamanho;i++){
+                double a;
+                a = resultados[i] - menor +100;
+                a = a*a;
+                chances.push_back(a);
+            }
+
+            //testando os resultados
+            for(int i=0;i<tamanho;i++){
+                cout<<"resultado para a solução "<<i<<endl;
+                cout<<resultados[i]<<endl;
+                cout<<"chance da solução "<<i<<" ser sorteada: "<<endl;
+                cout<<chances[i]<<endl;
+            }
+            cout<<endl<<endl;
+
+            //agora a partir das chances de cada solução, sorteamos soluções para serem pais e mães de novas soluções
+            //depois teremos que DESTRUIR soluções antigas, para que restem sempre 20.
+            //Mas isso será feito pela função destruir.
+            int sorteado1 = this->sorteador(chances,20);
+            int sorteado2 = this->sorteador(chances,20);
+
+            //testando
+            double maior_chance = 0;
+            for(int i = 0;i<tamanho;i++){
+
+                cout<<"chances "<<i<<endl;
+                cout<<chances[i]<<endl;
+
+                if(chances[i]>maior_chance){
+                    maior_chance = chances[i];
+                }
+            }
+
+            cout<<"sorteado: "<<endl;
+            cout<<chances[sorteado1]<<endl;
+            cout<<"maior chance: "<<endl;
+            cout<<maior_chance<<endl;
+            cout<<endl<<endl;
+
+            Solution pai = this->solutions[sorteado1];
+            Solution mae = this->solutions[sorteado2];
+            
+            Solution filho = this->gerar_filho(pai,mae);
+            this->solutions.push_back(filho);
+
         }
-
-        cout<<"sorteado: "<<endl;
-        cout<<chances[sorteado1]<<endl;
-        cout<<"maior chance: "<<endl;
-        cout<<maior_chance<<endl;
-        cout<<endl<<endl;
-
-        Solution pai = this->solutions[sorteado1];
-        Solution mae = this->solutions[sorteado2];
-        
-        Solution filho = this->gerar_filho(pai,mae);
-        this->solutions.push_back(filho);
-
-        
+            
         /*
         //no vector chances o valor na posição i+1 corresponde à soma 
         //do valor na posição i com o potencial da solução i+1 ser escolhida     
