@@ -224,6 +224,24 @@ class Population{
     }
 
     void criar_mutacao(int index, int intensidade){
+     
+
+        Funcoes funcoes;
+
+        for(int i = 0;i< intensidade*5;i++){
+            int quantidade_grupos = this->instance.quant_Grup;
+            int index1 = rand()%quantidade_grupos;
+            int index2 = rand()%quantidade_grupos;
+
+            int quantidade_elementos1 = this->solutions[index].solucao[index1].elementos.size();
+            int quantidade_elementos2 = this->solutions[index].solucao[index2].elementos.size();
+
+            int elemento1 = rand()%quantidade_elementos1;
+            int elemento2 = rand()%quantidade_elementos2;
+
+            funcoes.trocaElementos(this->solutions[index].solucao[index1],this->solutions[index].solucao[index2],elemento1,elemento2);
+
+        }
 
     }
 
@@ -237,7 +255,7 @@ class Population{
         double media = 0;
         int tamanho = this->solutions.size();
         Funcoes funcoes;
-
+             
 
         for(int i3=0;i3<10;i3++){
 
@@ -250,6 +268,7 @@ class Population{
                 double a;
                 a = funcoes.get_total(this->solutions[i].solucao,solutions[i].instance.arr_Pair);
                 resultados.push_back(a);
+               
             }
 
             //gerar valores para cada solução baseado em seu resultado, para serem usados no sorteio dos pais e filhos.
@@ -504,9 +523,9 @@ class Population{
         }
         int i = 0;
         while(this->solutions.size()>20) {
+            
             if(this->solutions[i].resultado == -1){
                 this->solutions.erase(this->solutions.begin() + i);
-
             }
             else{
                 i++;
@@ -519,9 +538,42 @@ class Population{
     }
 
     //reproduz organismos, mata organismos, gera mutações, salva melhor até o momento
-    void faz_tudo(){
-        this->seleciona_e_gera_filhos();
-        this->destruir();
+    void faz_tudo(int vezes){
+
+        for(int i=0;i<vezes;i++){
+
+
+
+            this->seleciona_e_gera_filhos();
+            this->destruir();       
+            
+            //gerar mutação
+
+            //para decidir se gera a mutação ou não
+            int sorteio = rand()%4;
+
+            //caso aconteça a mutação
+            if(sorteio == 1){
+
+                cout<<"mutação"<<endl;
+                int e = rand()%20; 
+                this->criar_mutacao(e,20);
+                e = rand()%20; 
+                this->criar_mutacao(e,20);
+                e = rand()%20; 
+                this->criar_mutacao(e,20);
+                e = rand()%20; 
+                this->criar_mutacao(e,20);
+                e = rand()%20; 
+                this->criar_mutacao(e,20);
+                e = rand()%20; 
+                this->criar_mutacao(e,20);
+            
+              
+               
+            }
+
+        }         
 
     }
 

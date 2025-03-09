@@ -770,29 +770,17 @@ void teste2(){
 
     //gerando soluções aleatórias
     Instance instance;
-    instance.read_File("instances/Geo/Geo_n012_ds_01.txt");
-    Solution solucoes[10];
-    double resultados[10];
-
+    instance.read_File("instances/Geo/Geo_n012_ds_04.txt");  
     Funcoes funcoes;
 
-    solucoes[0] = Solution(instance);
-    for(int i =0; i<10;i++){
-        solucoes[i] = solucoes[0].random();  
-        resultados[i] = funcoes.get_total(solucoes[i].solucao,solucoes[i].instance.arr_Pair);    
-        cout<<"resultado "<<i<<" :"<<resultados[i]<<endl<<endl;   
-    }
-
-    cout<<"teste"<<endl<<endl;
+    
 
     Population population(true,20, instance);
     
     population.imprimir();
-    population.testar();
-
-    for(int i=0;i<5;i++){
-        population.faz_tudo();
-    }    
+    population.testar();    
+    population.faz_tudo(20);
+    
 
     cout<<endl<<endl;
 
@@ -800,6 +788,7 @@ void teste2(){
     double resultado2 = funcoes.get_total(population.melhor.solucao,population.instance.arr_Pair);
     population.melhor.imprimir();
     cout<<resultado2<<endl;
+   
 
 }
 
