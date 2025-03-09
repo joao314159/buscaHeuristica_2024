@@ -49,7 +49,7 @@ class Population{
         if(inicializar){
             //as primeiras soluções são aleatórias
             for(int i = 0;i<tamanho_maximo-1;i++){
-                cout<<"solução " <<i<<" adicionada"<<endl;
+                
                 Solution solution(instance);                
                 
                 solution = solution.random();
@@ -85,14 +85,14 @@ class Population{
         }
         
         int total2 = (int)total + 1;
-        cout<<"total: "<<endl;
-        cout<<total2<<endl;
+       
+        
       
         double e = ((rand() / (double)RAND_MAX)); 
         double a = e * total2; 
 
-        cout<<"sorteado: "<<endl;
-        cout<<e<<endl;
+      
+       
         
         total = 0;
         i2=0;
@@ -140,8 +140,8 @@ class Population{
             int tamanho = father.solucao[i].elementos.size();
             tamanho = tamanho/3 +1;
 
-            cout<<father.solucao[i].elementos.size()<<endl;
-            cout<<tamanho<<endl;
+          
+          
 
             //passamos cada valor no grupo
             for(int i2=0;i2<tamanho;i2++){
@@ -152,9 +152,9 @@ class Population{
 
         }
 
-        cout<<"teste filho: "<<endl;
-        solution3.imprimir();
-        cout<<"teste filho fim"<<endl;
+      
+        //solution3.imprimir();
+       
 
         //para percorrer os elementos
         int i3 = 0;
@@ -163,8 +163,8 @@ class Population{
             
             //primeiro garantimos que todos os grupos respeitem o tamanho mínimo
             int i2 = solution3.solucao[i].elementos.size();
-            cout<<"elementos já adicionados no grupo "<<i<<endl;
-            cout<<i2<<endl<<endl;
+           
+          
 
             while(i2< solution3.solucao[i].tam_minimo){
                 
@@ -187,7 +187,7 @@ class Population{
 
 
                 if(not usados[i3]){
-                    cout<< "elemento adicionado"<<endl<<endl;
+                   
                     solution3.solucao[i].elementos.push_back(i3);
                     i2++;
                     usados[i3] = true;
@@ -212,9 +212,9 @@ class Population{
             }
         }
 
-        cout<<"teste 2 filho: "<<endl;
-        solution3.imprimir();
-        cout<<"teste 2 filho fim"<<endl;
+      
+        //solution3.imprimir();
+      
 
 
         
@@ -259,9 +259,9 @@ class Population{
 
         for(int i3=0;i3<10;i3++){
 
-            cout<<endl;
+           
 
-            cout<<"gerando filho "<<i3<<endl<<endl;
+          
 
 
             for(int i = 0;i< tamanho; i++){
@@ -297,7 +297,7 @@ class Population{
                 a = a*a;
                 chances.push_back(a);
             }
-
+/*
             //testando os resultados
             for(int i=0;i<tamanho;i++){
                 cout<<"resultado para a solução "<<i<<endl;
@@ -306,6 +306,7 @@ class Population{
                 cout<<chances[i]<<endl;
             }
             cout<<endl<<endl;
+*/
 
             //agora a partir das chances de cada solução, sorteamos soluções para serem pais e mães de novas soluções
             //depois teremos que DESTRUIR soluções antigas, para que restem sempre 20.
@@ -313,28 +314,28 @@ class Population{
             int sorteado1 = this->sorteador(chances,20);
             int sorteado2 = this->sorteador(chances,20);
 
-            cout<<"índice do pai: "<<endl;
-            cout<<sorteado1<<endl;
-            cout<<"Índice da mãe: "<<endl;
-            cout<<sorteado2<<endl;
+           
+           
+           
+       
 
             //testando
             double maior_chance = 0;
             for(int i = 0;i<tamanho;i++){
 
-                cout<<"chances "<<i<<endl;
-                cout<<chances[i]<<endl;
+            
+               
 
                 if(chances[i]>maior_chance){
                     maior_chance = chances[i];
                 }
             }
 
-            cout<<"sorteado: "<<endl;
-            cout<<chances[sorteado1]<<endl;
-            cout<<"maior chance: "<<endl;
-            cout<<maior_chance<<endl;
-            cout<<endl<<endl;
+           
+         
+           
+         
+          
 
             Solution pai = this->solutions[sorteado1];
             Solution mae = this->solutions[sorteado2];
@@ -344,8 +345,8 @@ class Population{
 
         }
 
-        cout<<"total de filhos: "<<endl;
-        cout<<this->solutions.size();
+      
+     
         //próximo passo: destruir 10 filhos
             
         /*
@@ -496,10 +497,11 @@ class Population{
         }
 
         sort(resultados.begin(),resultados.end());
-        cout<<"resultados ordenados: "<<endl;
+        /*
         for(int i = 0;i < resultados.size();i++){
             cout<<resultados[i].resultado<<endl;
         }
+*/
 
         //antes da destruição, salvamos o melhor até o momento
         Resultado_com_indice last = resultados.back();
@@ -512,10 +514,9 @@ class Population{
         }
             
 
-        cout<<"melhor até o momento: "<<endl;
-
+       
         
-        cout<<melhor2<<endl;
+        
 
         //agora destruímos 10 soluções
         for(int i = 0;i<10;i++){
@@ -532,7 +533,7 @@ class Population{
             }
         }
 
-        cout<<this->solutions.size()<<endl;
+        
 
 
     }
@@ -541,7 +542,6 @@ class Population{
     void faz_tudo(int vezes){
 
         for(int i=0;i<vezes;i++){
-
 
 
             this->seleciona_e_gera_filhos();
@@ -569,8 +569,7 @@ class Population{
                 e = rand()%20; 
                 this->criar_mutacao(e,20);
             
-              
-               
+                             
             }
 
         }         
@@ -578,6 +577,10 @@ class Population{
     }
 
     void imprimir(){
+
+        cout<<"quantidade de soluções: "<<endl;
+        cout<<this->solutions.size()<<endl;
+
         for(int i = 0; i< this->tamanho_maximo; i++){
 
             cout<<"solução "<<i<<endl;
