@@ -766,11 +766,54 @@ RanReal_n960_ss_01.txt 46 080 984 23 040
 
 }
 
+
+//testa com várias instâncias
+void teste3(){
+    vector<string> instancias_nomes = { 
+        "instances/RanInt/RanInt_n120_ds_01.txt",
+        "instances/RanInt/RanInt_n120_ds_02.txt",
+        "instances/RanInt/RanInt_n120_ds_03.txt",
+        "instances/RanInt/RanInt_n120_ds_04.txt",
+        "instances/RanInt/RanInt_n120_ds_05.txt",
+        "instances/RanInt/RanInt_n120_ds_06.txt",
+        "instances/RanInt/RanInt_n120_ds_07.txt",
+        "instances/RanInt/RanInt_n120_ds_08.txt",
+        "instances/RanInt/RanInt_n120_ds_09.txt",
+        "instances/RanInt/RanInt_n120_ds_10.txt",
+
+        "instances/RanInt/RanInt_n240_ds_01.txt",
+        "instances/RanInt/RanInt_n240_ds_02.txt",
+        "instances/RanInt/RanInt_n240_ds_03.txt",
+        "instances/RanInt/RanInt_n240_ds_04.txt",
+        "instances/RanInt/RanInt_n240_ds_05.txt",
+        "instances/RanInt/RanInt_n240_ds_06.txt",
+        "instances/RanInt/RanInt_n240_ds_07.txt",
+        "instances/RanInt/RanInt_n240_ds_08.txt",
+        "instances/RanInt/RanInt_n240_ds_09.txt",
+        "instances/RanInt/RanInt_n240_ds_10.txt"
+
+
+      
+
+    };
+
+    vector<Instance> instancias;
+
+    //lendo as instâncias
+    for(int i = 0; i<20;i++){
+        Instance instance;
+        instance.read_File(instancias_nomes[i]);
+        instancias.push_back(instance);
+    }
+
+
+}
+
 void teste2(){
 
     //gerando soluções aleatórias
     Instance instance;
-    instance.read_File("instances/Geo/Geo_n012_ss_05.txt");  
+    instance.read_File("instances/Geo/Geo_n030_ss_05.txt");  
     Funcoes funcoes;
 
     
@@ -800,6 +843,7 @@ void teste2(){
 
 int main()
 {
-   teste2();
+   //teste2();
+   teste3();
    return 0;
 }

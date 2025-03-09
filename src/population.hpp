@@ -16,7 +16,15 @@ public:
     double resultado;
 
     bool operator<(const Resultado_com_indice& resultado2) const{
-        return this->resultado < resultado2.resultado;        
+
+        int sorteio =  rand()%25;
+
+        if(sorteio != 1){
+            return this->resultado < resultado2.resultado;   
+        }else{
+            return resultado2.resultado < this->resultado;
+        }
+        
     }
 
 };
@@ -257,12 +265,7 @@ class Population{
         Funcoes funcoes;
              
 
-        for(int i3=0;i3<10;i3++){
-
-           
-
-          
-
+        for(int i3=0;i3<10;i3++){                  
 
             for(int i = 0;i< tamanho; i++){
                 double a;
@@ -272,8 +275,7 @@ class Population{
             }
 
             //gerar valores para cada solução baseado em seu resultado, para serem usados no sorteio dos pais e filhos.
-            //quando sortear um pai. descartá-lo antes de sortear a mãe. Uma solução não pode ser pai e mãe.
-            
+                       
             //primeiro calculamos a média dos resultados e o menor valor entre os resultados
             
             double menor = resultados[0];
@@ -314,18 +316,12 @@ class Population{
             int sorteado1 = this->sorteador(chances,20);
             int sorteado2 = this->sorteador(chances,20);
 
-           
-           
-           
-       
+                                       
 
             //testando
             double maior_chance = 0;
-            for(int i = 0;i<tamanho;i++){
-
-            
+            for(int i = 0;i<tamanho;i++){            
                
-
                 if(chances[i]>maior_chance){
                     maior_chance = chances[i];
                 }
@@ -497,11 +493,13 @@ class Population{
         }
 
         sort(resultados.begin(),resultados.end());
-        /*
+        
+        cout<<"resultados mais ou menos ordenados: "<<endl;
         for(int i = 0;i < resultados.size();i++){
             cout<<resultados[i].resultado<<endl;
         }
-*/
+        cout<<"ordenação fim"<<endl;
+
 
         //antes da destruição, salvamos o melhor até o momento
         Resultado_com_indice last = resultados.back();
@@ -546,6 +544,7 @@ class Population{
 
             this->seleciona_e_gera_filhos();
             this->destruir();       
+            
             
             //gerar mutação
 
