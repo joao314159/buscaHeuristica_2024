@@ -96,7 +96,7 @@ public:
                     int tamanho = elementos.size();
                     index = index%tamanho;
                     if(index==0){
-                        cout<<"TESTE"<<endl<<endl<<endl;
+                        //cout<<"TESTE"<<endl<<endl<<endl;
                     }
 
                     grupos[i].elementos.push_back(elementos[index]);

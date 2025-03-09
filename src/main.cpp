@@ -775,8 +775,9 @@ void teste3(){
         "instances/RanInt/RanInt_n120_ds_03.txt",
         "instances/RanInt/RanInt_n120_ds_04.txt",
         "instances/RanInt/RanInt_n120_ds_05.txt",
+        
         "instances/RanInt/RanInt_n120_ds_06.txt",
-        "instances/RanInt/RanInt_n120_ds_07.txt",
+        "instances/RanInt/RanInt_n120_ds_07.txt"/*
         "instances/RanInt/RanInt_n120_ds_08.txt",
         "instances/RanInt/RanInt_n120_ds_09.txt",
         "instances/RanInt/RanInt_n120_ds_10.txt",
@@ -791,19 +792,65 @@ void teste3(){
         "instances/RanInt/RanInt_n240_ds_08.txt",
         "instances/RanInt/RanInt_n240_ds_09.txt",
         "instances/RanInt/RanInt_n240_ds_10.txt"
+        
 
-
-      
+      */
 
     };
+
+    int tamanho = instancias_nomes.size();
 
     vector<Instance> instancias;
 
     //lendo as instâncias
-    for(int i = 0; i<20;i++){
+    for(int i = 0; i<tamanho;i++){
         Instance instance;
         instance.read_File(instancias_nomes[i]);
         instancias.push_back(instance);
+    }
+
+    vector<double> solucoes_heuristica;
+    vector<double> solucoes_algoritmo_genetico;
+
+    Funcoes funcoes;
+
+    //calcula as soluções a partir da heurística desenvolvida anteriormente
+    for(int i = 0;i<tamanho;i++){
+
+        double resultado;
+        Solution solucao(instancias[i]);
+
+        vector<Grupo> grupos =  solucao.calcular_resultado5();
+        resultado = funcoes.get_total(grupos,instancias[i].arr_Pair);
+
+        solucoes_heuristica.push_back(resultado); 
+
+    }
+
+    //calcula as soluções a partir do algoritmo genético
+    for(int i =0;i<tamanho;i++){
+
+        double resultado;
+        Solution solucao;
+        
+        Population populacao(true,20,instancias[i]);
+
+        populacao.faz_tudo(60);
+
+        solucao = populacao.melhor;
+        resultado = funcoes.get_total(solucao.solucao,instancias[i].arr_Pair);
+
+        solucoes_algoritmo_genetico.push_back(resultado);
+    }
+
+    //imprime resultados comparando-os
+    for(int i =0;i<tamanho;i++){
+        cout<<"solução para a instância "<<i<<" "<<instancias_nomes[i]<<endl;
+
+        cout<<"solução a partir da heurística: "<<endl;
+        cout<<solucoes_heuristica[i]<<endl;
+        cout<<"soluções para o algoritmo genético: "<<endl;
+        cout<<solucoes_algoritmo_genetico[i]<<endl<<endl;
     }
 
 
@@ -813,7 +860,7 @@ void teste2(){
 
     //gerando soluções aleatórias
     Instance instance;
-    instance.read_File("instances/Geo/Geo_n030_ss_05.txt");  
+    instance.read_File("instances/Geo/Geo_n012_ss_05.txt");  
     Funcoes funcoes;
 
     

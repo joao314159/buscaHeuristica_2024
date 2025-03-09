@@ -17,13 +17,17 @@ public:
 
     bool operator<(const Resultado_com_indice& resultado2) const{
 
-        int sorteio =  rand()%25;
+        int sorteio =  rand()%10;
 
+        /*
         if(sorteio != 1){
             return this->resultado < resultado2.resultado;   
         }else{
             return resultado2.resultado < this->resultado;
         }
+        */
+
+        return this->resultado < resultado2.resultado;   
         
     }
 
@@ -43,7 +47,7 @@ class Population{
              
     
     Population(bool inicializar, int tamanho_maximo, Instance instance){
-        cout<<"TESTE"<<endl<<endl;
+        
         solutions ={};
 
         this->tamanho_maximo = tamanho_maximo;
@@ -81,6 +85,7 @@ class Population{
 
     }
 
+  
    
     int sorteador(vector<double>& lista, int tamanho){
     
@@ -146,7 +151,7 @@ class Population{
 
             //nunca haverá valor 0
             int tamanho = father.solucao[i].elementos.size();
-            tamanho = tamanho/3 +1;
+            tamanho = tamanho/2 + 1;
 
           
           
@@ -236,7 +241,7 @@ class Population{
 
         Funcoes funcoes;
 
-        for(int i = 0;i< intensidade*5;i++){
+        for(int i = 0;i< intensidade*instance.quant_Elem/5.0;i++){
             int quantidade_grupos = this->instance.quant_Grup;
             int index1 = rand()%quantidade_grupos;
             int index2 = rand()%quantidade_grupos;
@@ -296,7 +301,7 @@ class Population{
             for(int i =0;i<tamanho;i++){
                 double a;
                 a = resultados[i] - menor +100;
-                a = a*a;
+                //a = a*a;
                 chances.push_back(a);
             }
 /*
@@ -326,12 +331,8 @@ class Population{
                     maior_chance = chances[i];
                 }
             }
-
-           
-         
-           
-         
-          
+                             
+                   
 
             Solution pai = this->solutions[sorteado1];
             Solution mae = this->solutions[sorteado2];
@@ -494,11 +495,11 @@ class Population{
 
         sort(resultados.begin(),resultados.end());
         
-        cout<<"resultados mais ou menos ordenados: "<<endl;
-        for(int i = 0;i < resultados.size();i++){
-            cout<<resultados[i].resultado<<endl;
-        }
-        cout<<"ordenação fim"<<endl;
+        //cout<<"resultados mais ou menos ordenados: "<<endl;
+        //for(int i = 0;i < resultados.size();i++){
+        //    cout<<resultados[i].resultado<<endl;
+        //}
+        //cout<<"ordenação fim"<<endl;
 
 
         //antes da destruição, salvamos o melhor até o momento
@@ -517,9 +518,30 @@ class Population{
         
 
         //agora destruímos 10 soluções
+        /*
+        
         for(int i = 0;i<10;i++){
             this->solutions[resultados[i].indice].resultado = -1;
         }
+
+        */
+        //pra ficar diversificado, não destruímos o quarto nem o quinto
+        for(int i = 0;i<4;i++){
+            this->solutions[resultados[i].indice].resultado = -1;
+        }
+
+        for(int i = 9;i<15;i++){
+            this->solutions[resultados[i].indice].resultado = -1;
+        }
+
+
+
+
+
+
+
+
+
         int i = 0;
         while(this->solutions.size()>20) {
             
@@ -549,24 +571,20 @@ class Population{
             //gerar mutação
 
             //para decidir se gera a mutação ou não
-            int sorteio = rand()%4;
+            int sorteio = rand()%20;
 
             //caso aconteça a mutação
             if(sorteio == 1){
 
                 cout<<"mutação"<<endl;
                 int e = rand()%20; 
-                this->criar_mutacao(e,20);
+                this->criar_mutacao(e,8);
                 e = rand()%20; 
-                this->criar_mutacao(e,20);
+                this->criar_mutacao(e,8);
                 e = rand()%20; 
-                this->criar_mutacao(e,20);
+                this->criar_mutacao(e,8);
                 e = rand()%20; 
-                this->criar_mutacao(e,20);
-                e = rand()%20; 
-                this->criar_mutacao(e,20);
-                e = rand()%20; 
-                this->criar_mutacao(e,20);
+                
             
                              
             }
