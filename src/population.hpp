@@ -77,6 +77,10 @@ class Population{
             this->solutions.push_back(solution);
         }  
 
+        
+        
+
+
         this->melhor = solutions[0];
         
         //para usar a função rand() depois
