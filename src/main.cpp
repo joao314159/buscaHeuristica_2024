@@ -777,7 +777,7 @@ void teste3(){
         "instances/RanInt/RanInt_n120_ds_05.txt",
         
         "instances/RanInt/RanInt_n120_ds_06.txt",
-        "instances/RanInt/RanInt_n120_ds_07.txt"/*
+        "instances/RanInt/RanInt_n120_ds_07.txt"
         "instances/RanInt/RanInt_n120_ds_08.txt",
         "instances/RanInt/RanInt_n120_ds_09.txt",
         "instances/RanInt/RanInt_n120_ds_10.txt",
@@ -794,7 +794,7 @@ void teste3(){
         "instances/RanInt/RanInt_n240_ds_10.txt"
         
 
-      */
+      
 
     };
 
