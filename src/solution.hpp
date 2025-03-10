@@ -19,7 +19,7 @@ public:
     Instance instance;
     double resultado;
     vector<Grupo> solucao;
-    vector<Solution> vizinhos;    
+    vector<Solution> vizinhos;
 
     Solution()
     {
@@ -66,16 +66,17 @@ public:
 
         return grupos;
     }
-//concertar
-    Solution random(){
+    // concertar
+    Solution random()
+    {
 
         Solution solution1(this->instance);
 
-        //para gerar sempre números diferentes
-        unsigned seed = time(0) + clock()*10;
+        // para gerar sempre números diferentes
+        unsigned seed = time(0) + clock() * 10;
         srand(seed);
 
-        //gera distribuição aleatória
+        // gera distribuição aleatória
 
         Funcoes funcoes;
         vector<int> elementos;
@@ -89,24 +90,26 @@ public:
             for (int i = 0; i < instance.quant_Grup; i++)
             {
                 if (grupos[i].elementos.size() < grupos[i].tam_minimo)
-                {   
-                    if(elementos.size()==0){break;}
-                    //gera um número aleatório entre os elementos
+                {
+                    if (elementos.size() == 0)
+                    {
+                        break;
+                    }
+                    // gera um número aleatório entre os elementos
                     int index = rand();
                     int tamanho = elementos.size();
-                    index = index%tamanho;
-                    if(index==0){
-                        //cout<<"TESTE"<<endl<<endl<<endl;
+                    index = index % tamanho;
+                    if (index == 0)
+                    {
+                        // cout<<"TESTE"<<endl<<endl<<endl;
                     }
 
                     grupos[i].elementos.push_back(elementos[index]);
 
                     elementos.erase(elementos.begin() + index);
-                  
-
                 }
             }
-            
+
             for (int i = 0; i < instance.quant_Grup; i++)
             {
                 if (elementos.size() == 0)
@@ -114,29 +117,24 @@ public:
                     break;
                 }
                 if (grupos[i].elementos.size() < grupos[i].tam_maximo)
-                {   
-                    //gera um número aleatório entre os elementos
+                {
+                    // gera um número aleatório entre os elementos
                     int index = rand();
                     int tamanho = elementos.size();
-                    index = index%tamanho;
+                    index = index % tamanho;
 
                     grupos[i].elementos.push_back(elementos[index]);
 
                     elementos.erase(elementos.begin() + index);
-                   
-                    
                 }
             }
-            
         }
 
-        solution1.solucao  = grupos;
+        solution1.solucao = grupos;
         solution1.instance = this->instance;
 
         return solution1;
-        
     }
-    
 
     vector<Grupo> calcular_resultado()
     {
@@ -540,11 +538,10 @@ public:
     // funções para vizinhança///////////////
     /////////////////////////////////////////
 
-
     /////////////////////////////////////////
     /////////////////////////////////////////
     /////////////////////////////////////////
-    //primeira vizinhança////////////////////   
+    // primeira vizinhança////////////////////
     /////////////////////////////////////////
 
     /*
@@ -567,7 +564,7 @@ public:
     */
 
     void get_todos_vizinhos()
-    {          
+    {
         Funcoes funcoes;
         vector<Solution> vizinhos;
         vector<Grupo> solucao_atual = this->solucao;
@@ -615,7 +612,7 @@ public:
 
         this->vizinhos = vizinhos;
     }
-   
+
     // geramos a lista de vizinhos antes de usar as funções tem_maior_vizinho e maior_vizinho
     // melhor melhora
     // retorna índice do melhor vizinho
@@ -742,15 +739,15 @@ public:
     }
 
     int get_melhor_melhora()
-    {           
-        
+    {
+
         /*
-        get_todos_vizinhos();               
+        get_todos_vizinhos();
 
         int index = tem_maior_vizinho();
         */
         int index = -1;
-        
+
         Funcoes funcoes;
         Solution vizinho_atual;
         Solution vizinho_melhor;
@@ -786,16 +783,16 @@ public:
                 // restauramos a solução atual
                 funcoes.trocaElementos(solucao_atual[i], solucao_atual[i2], 0, 0);
 
-
-                //mantemos apenas o vizinho melhor e o atual
+                // mantemos apenas o vizinho melhor e o atual
                 vizinho_atual = vizinhos2.back();
 
-                //removemos o vizinho da lista de vizinhos para não gastar memória
+                // removemos o vizinho da lista de vizinhos para não gastar memória
                 vizinhos2.pop_back();
 
                 resultado_atual = funcoes.get_total(vizinho_atual.solucao, this->instance.arr_Pair);
 
-                if(resultado_atual> resultado_melhor){
+                if (resultado_atual > resultado_melhor)
+                {
                     resultado_melhor = resultado_atual;
                     vizinho_melhor = vizinho_atual;
                     index = 0;
@@ -808,64 +805,14 @@ public:
         return index;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /////////////////////////////////////////
     /////////////////////////////////////////
     /////////////////////////////////////////
-    //segunda vizinhança/////////////////////    
+    // segunda vizinhança/////////////////////
     /////////////////////////////////////////
 
-    
     void get_todos_vizinhos2()
-    {          
+    {
         Funcoes funcoes;
         vector<Solution> vizinhos;
         vector<Grupo> solucao_atual = this->solucao;
@@ -913,7 +860,7 @@ public:
 
         this->vizinhos = vizinhos;
     }
-   
+
     // geramos a lista de vizinhos antes de usar as funções tem_maior_vizinho e maior_vizinho
     // melhor melhora
     // retorna índice do melhor vizinho
@@ -1040,15 +987,15 @@ public:
     }
 
     int get_melhor_melhora2()
-    {           
-        
+    {
+
         /*
-        get_todos_vizinhos();               
+        get_todos_vizinhos();
 
         int index = tem_maior_vizinho();
         */
         int index = -1;
-        
+
         Funcoes funcoes;
         Solution vizinho_atual;
         Solution vizinho_melhor;
@@ -1084,16 +1031,16 @@ public:
                 // restauramos a solução atual
                 funcoes.trocaElementos2(solucao_atual[i], solucao_atual[i2]);
 
-
-                //mantemos apenas o vizinho melhor e o atual
+                // mantemos apenas o vizinho melhor e o atual
                 vizinho_atual = vizinhos2.back();
 
-                //removemos o vizinho da lista de vizinhos para não gastar memória
+                // removemos o vizinho da lista de vizinhos para não gastar memória
                 vizinhos2.pop_back();
 
                 resultado_atual = funcoes.get_total(vizinho_atual.solucao, this->instance.arr_Pair);
 
-                if(resultado_atual> resultado_melhor){
+                if (resultado_atual > resultado_melhor)
+                {
                     resultado_melhor = resultado_atual;
                     vizinho_melhor = vizinho_atual;
                     index = 0;
@@ -1106,16 +1053,15 @@ public:
         return index;
     }
 
-
-
-
-    void imprimir(){
+    void imprimir()
+    {
         int tamanho = this->solucao.size();
 
-        for(int i = 0; i< tamanho;i++){
+        for (int i = 0; i < tamanho; i++)
+        {
             solucao[i].imprimir();
-            cout<<endl<<endl;
+            cout << endl
+                 << endl;
         }
     }
-
 };

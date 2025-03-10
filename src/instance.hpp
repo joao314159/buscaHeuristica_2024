@@ -72,7 +72,7 @@ public:
         // Armazena as informações das distâncias
         int first_Elem, second_Elem;
         double distance;
-        
+
         while (getline(file, line))
         {
             stringstream string_stream(line);
@@ -82,22 +82,23 @@ public:
             string_stream >> distance;
             this->arr_Pair.push_back(Pair(first_Elem, second_Elem, distance));
         }
-        
+
         file.close();
         // cout << "Arquivo lido com sucesso!" << endl;
 
-        //calcula a média
+        // calcula a média
         double total = 0;
-        
-        for(int i =0; i < this->arr_Pair.size();i++){
-            total+= this->arr_Pair[i].distance_Element;
+
+        for (int i = 0; i < this->arr_Pair.size(); i++)
+        {
+            total += this->arr_Pair[i].distance_Element;
         }
 
         double tamanho = (double)arr_Pair.size();
-        this->media = total/tamanho;
+        this->media = total / tamanho;
 
-        cout<<"média: "<<this->media<<endl<<endl;
-
+        cout << "média: " << this->media << endl
+             << endl;
     }
 
     void to_String()
@@ -119,9 +120,11 @@ public:
         }
         cout << endl;
 
-        cout << endl << "Array de objetos do tipo Pair: " << endl;
-        for (Pair pair : arr_Pair) {
-            pair.to_String();  // Chama o método to_String de Pair
+        cout << endl
+             << "Array de objetos do tipo Pair: " << endl;
+        for (Pair pair : arr_Pair)
+        {
+            pair.to_String(); // Chama o método to_String de Pair
             cout << endl;
         }
 

@@ -10,192 +10,9 @@
 #include "solution.hpp"
 #include "population.hpp"
 
-
 using namespace std;
 
 // g++ main.cpp -o main.exe; ./main.exe
-
-// TODO: escolher duas vizinhanças PRONTO
-// TODO: fazer o percorrimento acontecer por uma quantidade de tempo PRONTO
-// TODO: fazer a busca tabu
-
-class Lista_tabu{
-
-    public:
-
-    Solution* tabu_list;
-    int last;
-    int tamanho;
-
-    Lista_tabu(int tamanho1){
-        this->tamanho = tamanho1;    
-        this->tabu_list = new Solution[this->tamanho];
-        last = -1;    
-    }
-
-    ~Lista_tabu(){
-        delete[] this->tabu_list;
-    }
-
-    void add(Solution solution){
-
-        
-        //primeiro elemento adicionado na lista
-        if(this->last == -1){
-            this->last = 0;
-            this->tabu_list[0] = solution;
-            cout<<this->tabu_list[0].solucao[0].elementos.size();
-        }
-        else{
-            if(this->last == this->tamanho - 1){
-                this->tabu_list[0] = solution;
-                this->last = 0;
-            }
-            else{
-                this->tabu_list[last+1] = solution;
-                this->last++;
-            }
-        }
-                
-
-    }  
-};
-
-
-bool is_in_tabu_list(const Lista_tabu& lista_tabu ,const Solution& solution){
-    bool resultado = false;
-    int tamanho = lista_tabu.tamanho;
-    for(int i = 0; i < tamanho; i++ ){
-        
-        if(solution.solucao == lista_tabu.tabu_list[i].solucao){
-            resultado = true;
-            cout<<"soluções iguais."<<endl;
-            break;            
-        }        
-    }
-    return resultado;
-}
-
-//se alternarmos trocaElementos para troca Elementos2 executamos a segunda vizinhança
-Solution tabu_search(Instance instance){
-
-    Funcoes funcoes;
-    Solution solution(instance);
-
-    vector<Grupo> grupos = solution.calcular_resultado5(); 
-
-
-    Solution melhor_atual_total = solution;
-    double resultado_melhor_solucao_atual_total = funcoes.get_total(solution.solucao,instance.arr_Pair);
-    double auxiliar = 0;
-
-    Lista_tabu lista_tabu(20);
-    
-    
-
-    //fazemos como na primeira melhora, percorrendo os vizinhos e salvando o melhor
-    //porém não salvamos o melhor caso ele esteja na lista tabu
-    //quando achamos o melhor atualizamos a lista tabu, substituindo a 
-    //solução mais antiga pela solução anterior
-
-
-
-    for(int i=0;i<13;i++){
-
-            //para guardar a melhor solução até o momento
-            auxiliar = funcoes.get_total(solution.solucao,instance.arr_Pair);
-            if(auxiliar > resultado_melhor_solucao_atual_total){
-                resultado_melhor_solucao_atual_total = auxiliar;
-                melhor_atual_total = solution;
-            }
-                        
-            /*
-            get_todos_vizinhos();               
-
-            int index = tem_maior_vizinho();
-            */
-            int index = -1;
-            
-            Funcoes funcoes;
-            Solution vizinho_atual;
-            Solution vizinho_melhor;
-
-            vector<Solution> vizinhos2;
-
-            //o resultado inicial é -1, para que algum vizinho seja sempre escolhido
-            double resultado_atual = -1;
-            double resultado_melhor = resultado_atual;
-
-            vector<Grupo> solucao_atual = solution.solucao;
-
-            // fazer para todos os pares de grupos
-            for (int i = 0; i < solucao_atual.size() - 1; i++)
-            {
-                for (int i2 = i + 1; i2 < solucao_atual.size(); i2++)
-                {
-                    // cout<<i<<", "<<i2 <<endl;
-                    // para cada par de grupos nós trocamos o primeiro elemento
-                    // de um grupo com o primeiro elemento de outro
-                    // e adicionamos o resultado no array de vizinhos
-                    funcoes.trocaElementos2(solucao_atual[i], solucao_atual[i2]);
-
-                    // adicionamos o vector de grupos com os elementos trocados no vizinho
-                    Solution solucao1;
-                    solucao1.instance = instance;
-                    vizinhos2.push_back(solucao1);
-                    vizinhos2.back().solucao = solucao_atual;
-
-                    // adiciona ao vizinho um ponteiro para a solução de onde ele veio
-                    vizinhos2.back().vizinhos = {};
-                    vizinhos2.back().vizinhos.push_back(solution);
-
-                    // restauramos a solução atual
-                    funcoes.trocaElementos2(solucao_atual[i], solucao_atual[i2]);
-
-
-                    //mantemos apenas o vizinho melhor e o atual
-                    vizinho_atual = vizinhos2.back();
-
-                    //removemos o vizinho da lista de vizinhos para não gastar memória
-                    vizinhos2.pop_back();
-
-                    resultado_atual = funcoes.get_total(vizinho_atual.solucao, instance.arr_Pair);
-
-                    if(resultado_atual > resultado_melhor && (not is_in_tabu_list(lista_tabu,vizinho_atual) ) ){
-                        resultado_melhor = resultado_atual;
-                        vizinho_melhor = vizinho_atual;
-                        index = 0;
-                    }
-                }
-            }
-
-            solution.vizinhos.push_back(vizinho_melhor);
-
-            //a solução atual passa a ser o melhor vizinho, mesmo que a solução atual seja melhor.
-            solution = solution.vizinhos.back();
-
-
-    }    
-
-    return melhor_atual_total;
-
-/*
-        for(int i = 0; i < 10;i++){
-            lista_tabu.add(solution);            
-        }   
-
-        if(is_in_tabu_list(lista_tabu,solution)){
-            cout<<"solução está na tabu search! "<<endl;
-        }
-        
-        else{
-        cout<<"a"<<endl;
-        }
-        
-
-*/
-
-}
 
 // Imprime os resultados.
 void resultados(Instance instance)
@@ -203,16 +20,16 @@ void resultados(Instance instance)
     Funcoes funcoes;
     Solution solution(instance);
 
-    //vector<Grupo> grupos1 = solution.calcular_resultado();
-    //vector<Grupo> grupos3 = solution.calcular_resultado2();
-    //vector<Grupo> grupos2 = solution.calcular_resultado3();
-    //vector<Grupo> grupos4 = solution.calcular_resultado4();
+    // vector<Grupo> grupos1 = solution.calcular_resultado();
+    // vector<Grupo> grupos3 = solution.calcular_resultado2();
+    // vector<Grupo> grupos2 = solution.calcular_resultado3();
+    // vector<Grupo> grupos4 = solution.calcular_resultado4();
     vector<Grupo> grupos5 = solution.calcular_resultado5();
 
-    //double resultado1 = funcoes.get_total(grupos1, instance.arr_Pair);
-    //double resultado2 = funcoes.get_total(grupos2, instance.arr_Pair);
-    //double resultado3 = funcoes.get_total(grupos3, instance.arr_Pair);
-    //double resultado4 = funcoes.get_total(grupos4, instance.arr_Pair);
+    // double resultado1 = funcoes.get_total(grupos1, instance.arr_Pair);
+    // double resultado2 = funcoes.get_total(grupos2, instance.arr_Pair);
+    // double resultado3 = funcoes.get_total(grupos3, instance.arr_Pair);
+    // double resultado4 = funcoes.get_total(grupos4, instance.arr_Pair);
     double resultado5 = funcoes.get_total(grupos5, instance.arr_Pair);
 
     /*
@@ -233,12 +50,10 @@ void resultados(Instance instance)
         */
 
     cout << "resultado antes da busca local: " << endl;
-    cout <<resultado5 << endl;
+    cout << resultado5 << endl;
 
     cout << "trocando elementos de dois grupos: " << endl;
     cout << "resultado: " << endl;
-
-    
 
     // funcoes.trocaElementos(solution.solucao[0], solution.solucao[1],0,0);
     // resultado5 = funcoes.get_total(solution.solucao, instance.arr_Pair);
@@ -248,8 +63,8 @@ void resultados(Instance instance)
     ////////////////////////////////////////////////////////////////////
     // melhor melhora
 
-    //melhor melhora 1 primeira vizinhança
-    //melhor melhora 2 segunda vizinhança
+    // melhor melhora 1 primeira vizinhança
+    // melhor melhora 2 segunda vizinhança
     /*
         //marca o início do tempo para essa instância
         auto start = std::chrono::high_resolution_clock::now();
@@ -286,55 +101,47 @@ void resultados(Instance instance)
         std::chrono::duration<double> duration = end - start;
 
     */
-    
+
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     // primeira melhora
 
-    
+    // primeira melhora 1 para primeira vizih=nhança
+    // primeira melhora 2 para segunda vizinhança
 
-    //primeira melhora 1 para primeira vizih=nhança
-    //primeira melhora 2 para segunda vizinhança
-    
-        //marca o início do tempo para essa instância
-        auto start = std::chrono::high_resolution_clock::now();
-    
-        int index = solution.get_primeira_melhora();
-        Solution solution2 = solution;
+    // marca o início do tempo para essa instância
+    auto start = std::chrono::high_resolution_clock::now();
 
+    int index = solution.get_primeira_melhora();
+    Solution solution2 = solution;
 
-        while(index != -1){
+    while (index != -1)
+    {
 
-            cout<<"índice: "<<index<<endl;
+        cout << "índice: " << index << endl;
 
-            solution2 = solution2.vizinhos[index];
-            
+        solution2 = solution2.vizinhos[index];
 
-            //remove o ponteiro para a solução anterior, para evitar consumo de memória
-            solution2.vizinhos.erase(solution2.vizinhos.begin());
+        // remove o ponteiro para a solução anterior, para evitar consumo de memória
+        solution2.vizinhos.erase(solution2.vizinhos.begin());
 
-            index = solution2.get_primeira_melhora();
+        index = solution2.get_primeira_melhora();
+    }
 
-        }
-        
+    // marca o final do tempo para essa instância
+    auto end = std::chrono::high_resolution_clock::now();
 
-        //marca o final do tempo para essa instância
-        auto end = std::chrono::high_resolution_clock::now();
+    resultado5 = funcoes.get_total(solution2.solucao, instance.arr_Pair);
 
-        resultado5 = funcoes.get_total(solution2.solucao,instance.arr_Pair);
+    // Calcula o tempo decorrido
+    std::chrono::duration<double> duration = end - start;
 
-        // Calcula o tempo decorrido
-        std::chrono::duration<double> duration = end - start;
-
-
-    
-    
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
-    //tabu search
-    
+    // tabu search
+
     /*
         //marca o início do tempo para essa instância
         auto start = std::chrono::high_resolution_clock::now();
@@ -349,8 +156,8 @@ void resultados(Instance instance)
 
         resultado5 = funcoes.get_total(solucao3.solucao,instance.arr_Pair);
 
-        for(int i = 0;i<solucao3.solucao.size();i++){        
-            solucao3.solucao[i].teste();        
+        for(int i = 0;i<solucao3.solucao.size();i++){
+            solucao3.solucao[i].teste();
         }
 
     */
@@ -366,27 +173,28 @@ void resultados(Instance instance)
     //-1 0 8 -1 42 1 5
 
     cout << std::setprecision(15) << resultado5 << endl;
-    cout<<"tempo de execução: "<< duration.count()<<" segundos."<<endl;
+    cout << "tempo de execução: " << duration.count() << " segundos." << endl;
     cout << endl
          << endl;
     cout << endl
          << endl;
 }
 
-void teste1(){
+void teste1()
+{
 
-     setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_ALL, "Portuguese");
 
     vector<string> fileNames = {
-       
-       /*"instances/Geo/Geo_n010_ss_01.txt",
-        "instances/Geo/Geo_n012_ss_01.txt",
-        "instances/Geo/Geo_n030_ss_01.txt",
-        "instances/Geo/Geo_n060_ss_01.txt",
-        "instances/Geo/Geo_n120_ss_01.txt",
-        "instances/Geo/Geo_n240_ss_01.txt",
-        "instances/Geo/Geo_n480_ss_01.txt",
-*/
+
+        /*"instances/Geo/Geo_n010_ss_01.txt",
+         "instances/Geo/Geo_n012_ss_01.txt",
+         "instances/Geo/Geo_n030_ss_01.txt",
+         "instances/Geo/Geo_n060_ss_01.txt",
+         "instances/Geo/Geo_n120_ss_01.txt",
+         "instances/Geo/Geo_n240_ss_01.txt",
+         "instances/Geo/Geo_n480_ss_01.txt",
+ */
         /*
         "instances/Geo/Geo_n960_ss_01.txt",
 
@@ -409,36 +217,36 @@ void teste1(){
         "instances/RanReal/RanReal_n960_ss_01.txt",
 
 */
-/*
-        "instances/Geo/Geo_n010_ds_01.txt",
-        "instances/Geo/Geo_n012_ds_01.txt",
-        "instances/Geo/Geo_n030_ds_01.txt",
-        "instances/Geo/Geo_n060_ds_01.txt",
-        "instances/Geo/Geo_n120_ds_01.txt",
-        "instances/Geo/Geo_n240_ds_01.txt",
-        "instances/Geo/Geo_n480_ds_01.txt",
-        */
-       "instances/RanInt/RanInt_n120_ds_01.txt",
-       "instances/RanInt/RanInt_n120_ds_02.txt",
-       "instances/RanInt/RanInt_n120_ds_03.txt",
-       "instances/RanInt/RanInt_n120_ds_04.txt",
-       "instances/RanInt/RanInt_n120_ds_05.txt",
-       "instances/RanInt/RanInt_n120_ds_06.txt",
-       "instances/RanInt/RanInt_n120_ds_07.txt",
-       "instances/RanInt/RanInt_n120_ds_08.txt",
-       "instances/RanInt/RanInt_n120_ds_09.txt",
-       "instances/RanInt/RanInt_n120_ds_10.txt",
-       
-       "instances/RanInt/RanInt_n240_ds_01.txt", 
-       "instances/RanInt/RanInt_n240_ds_02.txt", 
-       "instances/RanInt/RanInt_n240_ds_03.txt", 
-       "instances/RanInt/RanInt_n240_ds_04.txt", 
-       "instances/RanInt/RanInt_n240_ds_05.txt",
-       "instances/RanInt/RanInt_n240_ds_06.txt", 
-       "instances/RanInt/RanInt_n240_ds_07.txt", 
-       "instances/RanInt/RanInt_n240_ds_08.txt", 
-       "instances/RanInt/RanInt_n240_ds_09.txt", 
-       "instances/RanInt/RanInt_n240_ds_10.txt" 
+        /*
+                "instances/Geo/Geo_n010_ds_01.txt",
+                "instances/Geo/Geo_n012_ds_01.txt",
+                "instances/Geo/Geo_n030_ds_01.txt",
+                "instances/Geo/Geo_n060_ds_01.txt",
+                "instances/Geo/Geo_n120_ds_01.txt",
+                "instances/Geo/Geo_n240_ds_01.txt",
+                "instances/Geo/Geo_n480_ds_01.txt",
+                */
+        "instances/RanInt/RanInt_n120_ds_01.txt",
+        "instances/RanInt/RanInt_n120_ds_02.txt",
+        "instances/RanInt/RanInt_n120_ds_03.txt",
+        "instances/RanInt/RanInt_n120_ds_04.txt",
+        "instances/RanInt/RanInt_n120_ds_05.txt",
+        "instances/RanInt/RanInt_n120_ds_06.txt",
+        "instances/RanInt/RanInt_n120_ds_07.txt",
+        "instances/RanInt/RanInt_n120_ds_08.txt",
+        "instances/RanInt/RanInt_n120_ds_09.txt",
+        "instances/RanInt/RanInt_n120_ds_10.txt",
+
+        "instances/RanInt/RanInt_n240_ds_01.txt",
+        "instances/RanInt/RanInt_n240_ds_02.txt",
+        "instances/RanInt/RanInt_n240_ds_03.txt",
+        "instances/RanInt/RanInt_n240_ds_04.txt",
+        "instances/RanInt/RanInt_n240_ds_05.txt",
+        "instances/RanInt/RanInt_n240_ds_06.txt",
+        "instances/RanInt/RanInt_n240_ds_07.txt",
+        "instances/RanInt/RanInt_n240_ds_08.txt",
+        "instances/RanInt/RanInt_n240_ds_09.txt",
+        "instances/RanInt/RanInt_n240_ds_10.txt"
 
         /*
         "instances/Geo/Geo_n960_ds_01.txt",
@@ -730,18 +538,16 @@ RanReal_n960_ss_01.txt 46 080 984 23 040
         cout << fileNames[i] << endl;
         cout << endl;
         cout << "resultado encontrado pelo algoritmo: " << endl;
-        
-        
-        resultados(instances[i]);
-        
-        //int a = rand();
-        //a = a%9;
-        //cout<<"NÚMERO ALEATÓRIO: "<<a<<endl<<endl;
-        
 
-        //cout << "resultado da tabela: " << endl;
-        //cout << resultados_artigo[i] << endl;
-        //cout << endl;
+        resultados(instances[i]);
+
+        // int a = rand();
+        // a = a%9;
+        // cout<<"NÚMERO ALEATÓRIO: "<<a<<endl<<endl;
+
+        // cout << "resultado da tabela: " << endl;
+        // cout << resultados_artigo[i] << endl;
+        // cout << endl;
     }
 
     /*
@@ -763,38 +569,34 @@ RanReal_n960_ss_01.txt 46 080 984 23 040
      }
 
  */
-
 }
 
-
-//testa com várias instâncias
-void teste3(){
-    vector<string> instancias_nomes = { 
+// testa com várias instâncias
+void teste3()
+{
+    vector<string> instancias_nomes = {
         "instances/RanInt/RanInt_n120_ds_01.txt",
         "instances/RanInt/RanInt_n120_ds_02.txt",
         "instances/RanInt/RanInt_n120_ds_03.txt",
         "instances/RanInt/RanInt_n120_ds_04.txt",
         "instances/RanInt/RanInt_n120_ds_05.txt",
-        
+
         "instances/RanInt/RanInt_n120_ds_06.txt",
-        "instances/RanInt/RanInt_n120_ds_07.txt"/*
-        "instances/RanInt/RanInt_n120_ds_08.txt",
-        "instances/RanInt/RanInt_n120_ds_09.txt",
-        "instances/RanInt/RanInt_n120_ds_10.txt",
+        "instances/RanInt/RanInt_n120_ds_07.txt" /*
+         "instances/RanInt/RanInt_n120_ds_08.txt",
+         "instances/RanInt/RanInt_n120_ds_09.txt",
+         "instances/RanInt/RanInt_n120_ds_10.txt",
 
-        "instances/RanInt/RanInt_n240_ds_01.txt",
-        "instances/RanInt/RanInt_n240_ds_02.txt",
-        "instances/RanInt/RanInt_n240_ds_03.txt",
-        "instances/RanInt/RanInt_n240_ds_04.txt",
-        "instances/RanInt/RanInt_n240_ds_05.txt",
-        "instances/RanInt/RanInt_n240_ds_06.txt",
-        "instances/RanInt/RanInt_n240_ds_07.txt",
-        "instances/RanInt/RanInt_n240_ds_08.txt",
-        "instances/RanInt/RanInt_n240_ds_09.txt",
-        "instances/RanInt/RanInt_n240_ds_10.txt"*/
-        
-
-      
+         "instances/RanInt/RanInt_n240_ds_01.txt",
+         "instances/RanInt/RanInt_n240_ds_02.txt",
+         "instances/RanInt/RanInt_n240_ds_03.txt",
+         "instances/RanInt/RanInt_n240_ds_04.txt",
+         "instances/RanInt/RanInt_n240_ds_05.txt",
+         "instances/RanInt/RanInt_n240_ds_06.txt",
+         "instances/RanInt/RanInt_n240_ds_07.txt",
+         "instances/RanInt/RanInt_n240_ds_08.txt",
+         "instances/RanInt/RanInt_n240_ds_09.txt",
+         "instances/RanInt/RanInt_n240_ds_10.txt"*/
 
     };
 
@@ -802,8 +604,9 @@ void teste3(){
 
     vector<Instance> instancias;
 
-    //lendo as instâncias
-    for(int i = 0; i<tamanho;i++){
+    // lendo as instâncias
+    for (int i = 0; i < tamanho; i++)
+    {
         Instance instance;
         instance.read_File(instancias_nomes[i]);
         instancias.push_back(instance);
@@ -814,83 +617,83 @@ void teste3(){
 
     Funcoes funcoes;
 
-    //calcula as soluções a partir da heurística desenvolvida anteriormente
-    for(int i = 0;i<tamanho;i++){
+    // calcula as soluções a partir da heurística desenvolvida anteriormente
+    for (int i = 0; i < tamanho; i++)
+    {
 
         double resultado;
         Solution solucao(instancias[i]);
 
-        vector<Grupo> grupos =  solucao.calcular_resultado5();
-        resultado = funcoes.get_total(grupos,instancias[i].arr_Pair);
+        vector<Grupo> grupos = solucao.calcular_resultado5();
+        resultado = funcoes.get_total(grupos, instancias[i].arr_Pair);
 
-        solucoes_heuristica.push_back(resultado); 
-
+        solucoes_heuristica.push_back(resultado);
     }
 
-    //calcula as soluções a partir do algoritmo genético
-    for(int i =0;i<tamanho;i++){
+    // calcula as soluções a partir do algoritmo genético
+    for (int i = 0; i < tamanho; i++)
+    {
 
         double resultado;
         Solution solucao;
-        
-        Population populacao(true,20,instancias[i]);
+
+        Population populacao(true, 20, instancias[i]);
 
         populacao.faz_tudo(60);
 
         solucao = populacao.melhor;
-        resultado = funcoes.get_total(solucao.solucao,instancias[i].arr_Pair);
+        resultado = funcoes.get_total(solucao.solucao, instancias[i].arr_Pair);
 
         solucoes_algoritmo_genetico.push_back(resultado);
     }
 
-    //imprime resultados comparando-os
-    for(int i =0;i<tamanho;i++){
-        cout<<"solução para a instância "<<i<<" "<<instancias_nomes[i]<<endl;
+    // imprime resultados comparando-os
+    for (int i = 0; i < tamanho; i++)
+    {
+        cout << "solução para a instância " << i << " " << instancias_nomes[i] << endl;
 
-        cout<<"solução a partir da heurística: "<<endl;
-        cout<<solucoes_heuristica[i]<<endl;
-        cout<<"soluções para o algoritmo genético: "<<endl;
-        cout<<solucoes_algoritmo_genetico[i]<<endl<<endl;
+        cout << "solução a partir da heurística: " << endl;
+        cout << solucoes_heuristica[i] << endl;
+        cout << "soluções para o algoritmo genético: " << endl;
+        cout << solucoes_algoritmo_genetico[i] << endl
+             << endl;
     }
-
-
 }
 
-void teste2(){
+void teste2()
+{
 
-    //gerando soluções aleatórias
+    // gerando soluções aleatórias
     Instance instance;
-    instance.read_File("instances/Geo/Geo_n012_ss_05.txt");  
+    instance.read_File("instances/Geo/Geo_n012_ss_05.txt");
     Funcoes funcoes;
 
-    
+    Population population(true, 20, instance);
 
-    Population population(true,20, instance);
-    
-    //population.imprimir();
-    //population.testar();    
+    // population.imprimir();
+    // population.testar();
     population.faz_tudo(20);
 
-    //population.imprimir();
-    
+    // population.imprimir();
 
-    cout<<endl<<endl;
+    cout << endl
+         << endl;
 
-    //testando resultado
-    double resultado2 = funcoes.get_total(population.melhor.solucao,population.instance.arr_Pair);
-      
-    cout<<"a"<<endl<<endl;
+    // testando resultado
+    double resultado2 = funcoes.get_total(population.melhor.solucao, population.instance.arr_Pair);
+
+    cout << "a" << endl
+         << endl;
     population.melhor.imprimir();
-    cout<<resultado2<<endl;
-    cout<<endl<<endl;
+    cout << resultado2 << endl;
+    cout << endl
+         << endl;
     population.testar();
-
 }
-
 
 int main()
 {
-   //teste2();
-   teste3();
-   return 0;
+    // teste2();
+    teste3();
+    return 0;
 }

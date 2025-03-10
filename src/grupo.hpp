@@ -18,13 +18,17 @@ public:
 
     vector<int> pontos = {};
 
-    void teste(){
+    void teste()
+    {
         double tamanho1 = (double)this->tam_minimo;
         double tamanho2 = (double)this->tam_maximo;
-        if(elementos.size() < tamanho1 || elementos.size()>tamanho2){
-            cout<<endl<<endl;
-            cout<<"Erro! A quantidade de elementos é "<<elementos.size()<<" e o tamanho máximo é "<<this->tam_maximo<<" e o tamanho mínimo é "<<this->tam_minimo<<endl;
-            cout<<endl<<endl;
+        if (elementos.size() < tamanho1 || elementos.size() > tamanho2)
+        {
+            cout << endl
+                 << endl;
+            cout << "Erro! A quantidade de elementos é " << elementos.size() << " e o tamanho máximo é " << this->tam_maximo << " e o tamanho mínimo é " << this->tam_minimo << endl;
+            cout << endl
+                 << endl;
         }
     }
 
@@ -45,26 +49,26 @@ public:
         return this->elementos.size();
     }
 
-    bool operator==(const Grupo& other) const {
-        
+    bool operator==(const Grupo &other) const
+    {
+
         bool resultado = true;
 
-        if(&other == NULL){
+        if (this->elementos.size() != other.elementos.size())
+        {
             resultado = false;
         }
-
-        if(this->elementos.size() != other.elementos.size()){
-            resultado = false;
-        }
-        else{
-            for(int i = 0;i<this->elementos.size(); i++){
-                if(this->elementos[i] != other.elementos[i]){
-                    resultado=false;
+        else
+        {
+            for (int i = 0; i < this->elementos.size(); i++)
+            {
+                if (this->elementos[i] != other.elementos[i])
+                {
+                    resultado = false;
                 }
             }
         }
-        
+
         return resultado;
     }
-
 };
